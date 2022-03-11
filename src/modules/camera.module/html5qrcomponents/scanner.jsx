@@ -7,9 +7,6 @@ import { useNavigate } from "react-router-dom";
 import {Text} from "@mantine/core";
 
 class Scanner extends React.Component {
-    componentDidMount() {
-
-    }
 
     constructor(props) {
         super(props);

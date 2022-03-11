@@ -21,7 +21,6 @@ const AppRoot = AppRootModule.routeProps.element;
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
-            <Navigation/>
             <Routes>
                 <Route {...AppRootModule.routeProps}/>
                 {
