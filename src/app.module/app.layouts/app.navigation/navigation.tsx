@@ -41,7 +41,7 @@ const Navigation = () => {
                         </Group>
                     </Center>
                 </Link>
-                <Link style={{position:"absolute", height:"60px", width:"60px", bottom: "5px", right: "5%"}} to={"/camera"}>
+                <Link style={{position:"absolute", height:"60px", width:"60px", bottom: "5px", right: "5%"}} to={"/scanner"}>
                     <Center>
                         <ActionIcon color="green" size={60} radius="xl" variant="filled">
                             <CameraIcon style={ICON_SIZE} />
