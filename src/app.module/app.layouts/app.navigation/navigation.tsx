@@ -37,7 +37,7 @@ const Navigation = () => {
                             <ActionIcon size={'md'}>
                                 <AvatarIcon style={ICON_SIZE}/>
                             </ActionIcon>
-                            <Text color={"black"} underline={false} size={"xs"}>(возможно)</Text>
+                            <Text color={"black"} underline={false} size={"xs"}>Профиль</Text>
                         </Group>
                     </Center>
                 </Link>

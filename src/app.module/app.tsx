@@ -6,7 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Loader, ServerError } from './app.components';
 import { AuthLayout } from './app.layouts';
 
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { CommonModules } from '../modules';
 import { useWatchedObject } from "./app.services/app.realtimedb.service";
 import { RTDB } from "./app.resources/app.resouces.realtimedb";
@@ -16,13 +16,17 @@ import Navigation from "./app.layouts/app.navigation/navigation";
 const App = () => {
 
     const [ user, loading, error ] = useAuthState(auth);
+    let navigate = useNavigate();
 
     const { watchedObject, setWatchedObject } = useWatchedObject<String>(RTDB.SAMPLE_PATH);
 
     useEffect(() => {
         setWatchedObject('Этот текст отпавляется в базу и возвращается обратно');
         console.log(user, loading, error)
-    }, [])
+        if (user) {
+            navigate("/profile");
+        }
+    }, [user])
 
     return (
         <>

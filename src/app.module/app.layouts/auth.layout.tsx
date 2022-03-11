@@ -9,7 +9,7 @@ import { LoginLayout } from "./auth.layout/login.layout";
 export const AuthLayout = (props: {user?: UserInfo | null}) => {
     return (
         <div>
-            {props.user && <LoginStatusLayout/> || (
+            {!props.user && (
                 <>
                     <RegistrationLayout/>
                     <LoginLayout/>
