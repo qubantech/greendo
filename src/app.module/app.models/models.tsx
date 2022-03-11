@@ -82,6 +82,13 @@ type OwnedSubscription = {
     lastActionTimestamp: Date
 }
 
+type Code = {
+    barCode: string,
+    title: string,
+    description: string,
+    trashTypeId: number
+}
+
 export type {
     User,
     TrashType,
@@ -92,5 +99,6 @@ export type {
     Giveaway,
     GiveawayTicket,
     Takeout,
-    Fundomate
+    Fundomate,
+    Code
 };
