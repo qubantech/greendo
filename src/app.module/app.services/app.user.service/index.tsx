@@ -1,7 +1,7 @@
-import {Fundomate, Giveaway, GiveawayTicket, Sale, Subscription, Takeout, User} from "../../app.models/models";
+import {User} from "../../app.models/models";
 import {useWatchedObject} from "../app.realtimedb.service";
 
-export function useUser(userId: number) {
+export function useUser(userId: string) {
     return useWatchedObject<User>(`/users/${userId}`)
 }
 
