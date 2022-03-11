@@ -44,14 +44,14 @@
     font-size: 12pt;
 }
 
-@media(max-width: 640px) {
+@media(max-width: 720px) {
     #html5qr-code-full-region {
         width: 100%;
     }
 }
 
-@media(min-width: 640px) {
+@media(min-width: 720px) {
     #html5qr-code-full-region {
-        width: 100%;
+        width: 500px;
     }
 }
