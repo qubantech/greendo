@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { CommonModules } from '../modules';
 import { useWatchedObject } from "./app.services/app.realtimedb.service";
 import { RTDB } from "./app.resources/app.resouces.realtimedb";
+import Navigation from "./app.layouts/app.navigation/navigation";
 
 
 const App = () => {
@@ -43,6 +44,7 @@ const App = () => {
                     }
                 </ul>
             </header>
+            <Navigation/>
             {
                 error
                 && <ServerError/>
