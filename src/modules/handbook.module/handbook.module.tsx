@@ -68,7 +68,6 @@ const Handbook = () => {
                 console.log(obj)
                 return (
                     <Card shadow="sm" p="lg">
-
                         <Grid>
                             <Grid.Col span={11}>
                                 <Text size={"md"}>{obj[1].title}</Text>

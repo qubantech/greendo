@@ -5,7 +5,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../app.module/app.configs";
 import Navigation from "../../app.module/app.layouts/app.navigation/navigation";
 import {stringToColor} from "./generateColor";
-import {CaretRightIcon, ExitIcon, GearIcon, LoopIcon} from "@radix-ui/react-icons";
+import {CaretRightIcon, ExitIcon, GearIcon, LoopIcon, PlusCircledIcon} from "@radix-ui/react-icons";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {Pagination} from "swiper";
 //@ts-ignore
@@ -38,7 +38,7 @@ const Profile = () => {
     let navigate = useNavigate();
     let location = useLocation();
 
-    let color
+    let x:number
     useEffect(() => {
         console.log(user?.uid)
         console.log(userdata.watchedObject)
@@ -108,17 +108,40 @@ const Profile = () => {
                     <Button radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth>Статистика</Button>
                 </Grid.Col>
             </Grid>
-            <Grid grow>
+            <Space h={"md"}/>
+            <Grid>
                 <Grid.Col span={10}>
                     <Text size={"xl"} weight={"bold"}>История активностей</Text>
                 </Grid.Col>
                 <Grid.Col span={1}>
                     <CaretRightIcon style={{height:35, width: 35}}/>
                 </Grid.Col>
-                {userdata.watchedObject?.takeoutList && userdata.watchedObject?.takeoutList.map((obj) => {
-                    console.log(obj)
-                })}
             </Grid>
+            {userdata.watchedObject?.takeoutList && userdata.watchedObject?.takeoutList.map((obj) => {
+                console.log(obj)
+                return (
+                    <Card key={obj.takeoutId} shadow="sm" p="md">
+                        <Grid gutter={"xs"}>
+                            <Grid.Col span={2}>
+                                <PlusCircledIcon width={30} height={30}/>
+                            </Grid.Col>
+                            <Grid.Col span={9}>
+                                <Text size={"lg"}> +{
+                                    Object.entries(obj.trashTypeCountMap).map(i =>
+                                        x += (Number(i[0]) * obj.trashTypePriceMap[Number(i[0])]), x = 0).reverse()[0]
+                                } G</Text>
+                                <Text size={"sm"}>{
+                                    Object.entries(obj.trashTypeCountMap).map(i => x += i[1], x = 0).reverse()[0]}
+                                </Text>
+
+                            </Grid.Col>
+                            <Grid.Col span={1}>
+                                <CaretRightIcon width={25} height={25}/>
+                            </Grid.Col>
+                        </Grid>
+                    </Card>
+                )
+            })}
             <div>sas</div>
         </Container>
     </>
