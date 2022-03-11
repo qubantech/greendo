@@ -1,7 +1,10 @@
 import React from 'react';
+import Scanner from "./html5qrcomponents/scanner";
 
 const Camera = () => (
-    <div>Camera Module</div>
+    <>
+        <Scanner/>
+    </>
 );
 
 export default {

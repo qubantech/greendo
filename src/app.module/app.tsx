@@ -31,7 +31,7 @@ const App = () => {
                     {watchedObject && <strong>Объект в базе: {watchedObject}</strong>}
                 </p>
             </div>
-            <header>
+            {/*<header>
                 <ul>
                     {
                         CommonModules.map(module =>
@@ -43,7 +43,7 @@ const App = () => {
                         )
                     }
                 </ul>
-            </header>
+            </header>*/}
             <Navigation/>
             {
                 error
