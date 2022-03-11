@@ -4,6 +4,7 @@ type User = {
     sex: "m" | "f",
     city: string | null,
     tokens: number,
+    level: number,
     ownedSaleList: OwnedSale[],
     takeoutList: Takeout[],
     ownedSubscriptionList: OwnedSubscription[]
@@ -13,7 +14,7 @@ type Takeout = {
     takeoutId: number,
     userId: string,
     fundomateId: number
-    timestamp: Date,
+    timestamp: number,
     trashTypeCountMap: Map<number, number>, // trashTypeId -> count
     trashTypePriceMap: Map<number, number> // trashTypeId -> price per unit
 }
@@ -53,7 +54,7 @@ type Giveaway = {
     id: number,
     brand: string,
     description: string,
-    timestamp: Date,
+    timestamp: number,
     rules: string,
     price: number,
     tickets: GiveawayTicket[]
@@ -62,7 +63,7 @@ type Giveaway = {
 type GiveawayTicket = {
     giveawayId: number,
     userId: string,
-    boughtTime: Date
+    boughtTime: number
 }
 
 type Subscription = {
@@ -80,7 +81,7 @@ type OwnedSubscription = {
     subscriptionId: number,
     userId: string,
     sum: number,
-    lastActionTimestamp: Date
+    lastActionTimestamp: number
 }
 
 type Code = {
