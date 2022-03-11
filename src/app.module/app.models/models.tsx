@@ -15,8 +15,8 @@ type Takeout = {
     userId: string,
     fundomateId: number
     timestamp: number,
-    trashTypeCountMap: Map<number, number>, // trashTypeId -> count
-    trashTypePriceMap: Map<number, number> // trashTypeId -> price per unit
+    trashTypeCountMap: {[count: number]: number}, //Map<number, number>, // trashTypeId -> count
+    trashTypePriceMap: {[price: number]: number} // trashTypeId -> price per unit
 }
 
 type TrashType = {
@@ -31,7 +31,7 @@ type Fundomate = {
     location: GeolocationCoordinates,
     trashTypeIdList: number[],
     takeoutList: Takeout[],
-    capacityMap: Map<number, number> // trashTypeId -> filled [0..1]
+    capacityMap: {[capacity: number]: number} // trashTypeId -> filled [0..1]
 }
 
 type Sale = {
