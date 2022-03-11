@@ -1,0 +1,1 @@
+export { useWatchedObject } from './app.realtimedb.service'
