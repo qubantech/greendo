@@ -45,7 +45,7 @@ const App = () => {
                     }
                 </ul>
             </header>*/}
-            <Navigation/>
+
             {
                 error
                 && <ServerError/>
