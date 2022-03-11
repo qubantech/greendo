@@ -11,13 +11,17 @@ import {
 } from "react-router-dom";
 
 import AppRootModule from './app.module/app'
+import Navigation from "./app.module/app.layouts/app.navigation/navigation";
 
 const AppRoot = AppRootModule.routeProps.element;
+
+
 
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
+            <Navigation/>
             <Routes>
                 <Route {...AppRootModule.routeProps}/>
                 {

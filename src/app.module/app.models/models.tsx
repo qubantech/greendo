@@ -1,5 +1,5 @@
 type User = {
-    userId: number,
+    userId: string,
     nickname: string | null,
     sex: "m" | "f",
     city: string | null,
@@ -11,7 +11,7 @@ type User = {
 
 type Takeout = {
     takeoutId: number,
-    userId: number,
+    userId: string,
     fundomateId: number
     timestamp: Date,
     trashTypeCountMap: Map<number, number>, // trashTypeId -> count
@@ -45,7 +45,7 @@ type Sale = {
 
 type OwnedSale = {
     saleId: number,
-    userId: number,
+    userId: string,
     code: string
 }
 
@@ -61,7 +61,7 @@ type Giveaway = {
 
 type GiveawayTicket = {
     giveawayId: number,
-    userId: number,
+    userId: string,
     boughtTime: Date
 }
 
@@ -78,7 +78,7 @@ type Subscription = {
 
 type OwnedSubscription = {
     subscriptionId: number,
-    userId: number,
+    userId: string,
     sum: number,
     lastActionTimestamp: Date
 }
