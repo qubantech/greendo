@@ -38,6 +38,7 @@ type Sale = {
     brand: string,
     description: string,
     value: number,
+    price: number,
     rules: string | null,
     ownedSaleList: OwnedSale[]
 }
