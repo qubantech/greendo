@@ -26,13 +26,9 @@ const createCarouselItemImage = (index:number, options = {}) => (
     </div>
 );
 
-const levels = {
-    1: "Начинающий",
-    2: "Практик",
-    3: "Ответственный потребитель",
-    4: "Преисполненный",
-    5: "Всемирный эколог"
-}
+const levels = [
+"Начинающий", "Практик", "Ответственный потребитель", "Преисполненный", "Всемирный эколог"
+]
 
 const baseChildren = <div>{[1, 2].map(createCarouselItemImage)}</div>;
 
@@ -75,8 +71,8 @@ const Profile = () => {
                             <Image width={25} src={green}/>
                             <Text align={"right"} size={"xl"}>{userdata.watchedObject?.tokens} G </Text>
                         </Group>
-                        <Text align={"right"} size={"xs"}>Отвественный потребитель</Text>
-                        <Progress size={10} color={"blue"} value={50}/>
+                        <Text align={"right"} size={"xs"}> {userdata.watchedObject && userdata.watchedObject?.level && levels[Math.floor(userdata.watchedObject?.level / 100)]}</Text>
+                        <Progress size={10} color={"blue"} value={userdata.watchedObject?.level && userdata.watchedObject?.level % 100 }/>
                     </Group>
                 </Group>
             </Group>
@@ -120,7 +116,7 @@ const Profile = () => {
                     <CaretRightIcon style={{height:35, width: 35}}/>
                 </Grid.Col>
                 {userdata.watchedObject?.takeoutList && userdata.watchedObject?.takeoutList.map((obj) => {
-                    <div>{obj}</div>
+                    console.log(obj)
                 })}
             </Grid>
             <div>sas</div>
