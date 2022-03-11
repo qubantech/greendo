@@ -21,6 +21,7 @@ const App = () => {
 
     useEffect(() => {
         setWatchedObject('Этот текст отпавляется в базу и возвращается обратно');
+        console.log(user, loading, error)
     }, [])
 
     return (
