@@ -7,9 +7,11 @@ const ObjectManagerContainer = ( props ) => {
             <ObjectManager
                 options={{
                     clusterize: true,
-                    gridSize: 50,
-                    clusterIconLayout: 'default#pieChart'
-
+                    gridSize: 100,
+                    // clusterIconLayout: 'default#pieChart'
+                }}
+                clusters={{
+                    preset: 'islands#darkGreenClusterIcons',
                 }}
                 filter={ props.objectManagerFilter }
                 features={ props.features }
