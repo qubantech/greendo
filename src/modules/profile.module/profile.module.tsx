@@ -141,7 +141,7 @@ const Profile = () => {
                         <CaretRightIcon style={{height:20, width: 20}}/>
                     </Group>
                     <Group direction={"column"} spacing={2} grow>
-                        <Group position={"right"} direction={"row"} spacing={"xs"}>
+                        <Group position={"right"} direction={"row"} spacing={5}>
                             <Image width={25} src={green}/>
                             <Text align={"right"} size={"xl"}>{userdata.watchedObject?.tokens} G </Text>
                         </Group>
@@ -280,8 +280,8 @@ const Profile = () => {
                                 </ActionIcon>
                             </Grid.Col>
                             <Grid.Col span={8}>
-                                <Group>
-                                <Image width={20} src={green}/>
+                                <Group spacing={5}>
+                                <Image width={18} src={green}/>
                                 <Text size={"lg"} weight={"bold"}> {
                                     Object.entries(obj.trashTypeCountMap).map(i =>
                                         x += (Number(i[0]) * obj.trashTypePriceMap[Number(i[0])]), x = 0).reverse()[0]

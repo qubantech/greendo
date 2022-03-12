@@ -47,7 +47,7 @@ const ActivityModal = (props:{open:boolean, setOpen:any , obj:Takeout | undefine
                     console.log(obj)
                 })}
             </Text>
-            <Text> Время: {props.obj && new Date(props.obj.timestamp).toString()}
+            <Text> Время: {props.obj && new Date(props.obj.timestamp).toLocaleString("ru")}
             </Text>
         </Modal>
     );

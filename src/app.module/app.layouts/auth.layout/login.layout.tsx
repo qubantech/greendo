@@ -19,7 +19,7 @@ export const LoginLayout = () => {
 
     const login = () => {
         signInWithEmailAndPassword(email, password)
-        //navigate("/welcome")
+        navigate("/welcome")
     };
 
     return (
@@ -42,9 +42,9 @@ export const LoginLayout = () => {
                 }}
             />
             <Space h={"xl"}/>
-            <Button size={"lg"} fullWidth onClick={login}> Login</Button>
+            <Button size={"lg"} fullWidth onClick={login}>Вход</Button>
             <Space h={"xs"}/>
-            <Button size={"lg"} fullWidth onClick={() => signInWithEmailAndPassword("mail@mail.ru", "123456")}> Войти без регистрации</Button>
+            <Button size={"lg"} fullWidth onClick={() => {signInWithEmailAndPassword("mail@mail.ru", "123456"); navigate("/welcome")}}> Войти без регистрации (тест)</Button>
             {error?.message}
         </Container>
     );
