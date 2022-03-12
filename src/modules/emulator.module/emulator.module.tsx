@@ -3,10 +3,11 @@ import {Button, Center, Container, Grid, Group, Progress, Space, Text} from "@ma
 import QRCode from "react-qr-code";
 import {encryptPayload} from "../../app.module/app.services/app.jwt.service";
 import {useUuid} from "@mantine/hooks";
+import {useNavigate} from "react-router-dom";
 
 const Emulator = () => {
     //let fundomateId = 0
-
+    let navigate = useNavigate()
     const [fundomateId, setFundomateId] = useState(Math.round(Math.random() * 5))
 
     const [filled, setFilled] = useState({0: 0.0, 1: 0.0, 3: 0.0, 8: 0.0})
@@ -96,7 +97,9 @@ const Emulator = () => {
                     }))}/>
                 </Center>
             }
-
+            <Container sx={{position:"absolute", right:"0px", left: "0px", bottom:"15px"}}>
+                <Button fullWidth onClick={() => navigate("/")}>Назад</Button>
+            </Container>
         </Container>
     );
 }

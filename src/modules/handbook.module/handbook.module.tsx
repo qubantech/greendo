@@ -3,7 +3,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../app.module/app.configs";
 import {useLocation, useNavigate} from "react-router-dom";
 import Navigation from "../../app.module/app.layouts/app.navigation/navigation";
-import {Card, Container, Grid, Group, Image, Space, Text, Title} from "@mantine/core";
+import {Card, Container, Grid, Group, Image, LoadingOverlay, Space, Text, Title} from "@mantine/core";
 import {CaretRightIcon} from "@radix-ui/react-icons";
 import {Pagination} from "swiper";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -74,7 +74,7 @@ const Handbook = () => {
             </Group>
             <Space h={"md"}/>
             {user && <Navigation/>}
-            {trashtype.watchedObject && trashtype.watchedObject.map((obj, index)=> {
+            {trashtype.watchedObject && (trashtype.watchedObject.map((obj, index)=> {
                 return (
                     <>
                         <Card key={index} onClick={() => navigate(`/handbook/${index}`)} sx={{backgroundColor:"#EEF6FF"}}  shadow="sm" p="xs">
@@ -96,7 +96,7 @@ const Handbook = () => {
                         <Space h={"xs"}/>
                     </>
                     )
-            })}
+            })) || <LoadingOverlay visible={true}/>}
             <Space h={70}/>
         </Container>
     )

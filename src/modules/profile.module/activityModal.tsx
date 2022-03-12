@@ -19,7 +19,7 @@ const ActivityModal = (props:{open:boolean, setOpen:any , obj:Takeout | undefine
                 props.obj && props.obj.trashTypeCountMap &&
                 Object.entries(props.obj.trashTypeCountMap).map(i =>
                     //@ts-ignore
-                    x += (Number(i[0]) * props.obj.trashTypePriceMap[Number(i[0])]), x = 0).reverse()[0]
+                    x += (Number(i[1]) * props.obj.trashTypePriceMap[Number(i[0])]), x = 0).reverse()[0]
             } G</Title>
             <Table>
                 <thead>

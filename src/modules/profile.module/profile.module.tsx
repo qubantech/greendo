@@ -284,7 +284,7 @@ const Profile = () => {
                                 <Image width={18} src={green}/>
                                 <Text size={"lg"} weight={"bold"}> {
                                     Object.entries(obj.trashTypeCountMap).map(i =>
-                                        x += (Number(i[0]) * obj.trashTypePriceMap[Number(i[0])]), x = 0).reverse()[0]
+                                        x += (Number(i[1]) * obj.trashTypePriceMap[Number(i[0])]), x = 0).reverse()[0]
                                 } G</Text>
                                 </Group>
                                 <Text size={"sm"}> Было сдано {
