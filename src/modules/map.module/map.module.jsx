@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import MapContainer from "./map-container.module";
 import {Button, Container, Divider, Grid, Text} from "@mantine/core";
 import point_bonus from '../../app.module/app.resources/app.resources.map/icons/point_bonus.svg';
@@ -6,6 +6,7 @@ import MapFilter from "./map-filter";
 import {useAuthState} from "react-firebase-hooks/auth";
 import Navigation from "../../app.module/app.layouts/app.navigation/navigation";
 import {auth} from "../../app.module/app.configs";
+import {useContainerList} from "../../app.module/app.services/app.container.service";
 
 const map_model_style = {
     // height: "100vh",
@@ -27,6 +28,42 @@ const button_style = {
 const Map = () => {
     const [objectManagerFilter, setObjectManagerFilter] = useState(() => () => true);
     const [user, loading, error] = useAuthState(auth);
+    const containerList = useContainerList();
+    const [features, setFeatures] = useState({})
+
+    useEffect(() => {
+        if (containerList.watchedObject != null) {
+            let tempFeatures = {
+                "type": "FeatureCollection",
+                "features": []
+            };
+
+            containerList.watchedObject.forEach( (element, index) => {
+                let tempElement = {
+                    "type": "Feature",
+                    "id": index,
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            element.location.latitude,
+                            element.location.longitude
+                        ]
+                    },
+                    "properties": {
+                        "title": element.title,
+                        "description": element.description,
+                        "trashTypeIdList": element.trashTypeIdList,
+                        "address": element.address,
+                    },
+                    "options": {
+                        "preset": "islands#blueFamilyCircleIcon"
+                    }
+                }
+                tempFeatures.features.push(tempElement);
+            })
+            setFeatures(tempFeatures);
+        }
+    }, [containerList.watchedObject])
 
     return (
         <div style={ map_model_style }>
@@ -53,9 +90,12 @@ const Map = () => {
                     </Grid.Col>
                 </Grid>
                 <Divider my="sm" />
-                <MapFilter setObjectManagerFilter={setObjectManagerFilter}/>
+                <MapFilter setObjectManagerFilter={ setObjectManagerFilter }/>
             </Container>
-           <MapContainer objectManagerFilter={ objectManagerFilter }/>
+            {
+                containerList.watchedObject &&
+                <MapContainer objectManagerFilter={ objectManagerFilter } features={ features }/>
+            }
         </div>
     )
 };

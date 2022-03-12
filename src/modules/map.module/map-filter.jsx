@@ -1,40 +1,8 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Button, Group} from "@mantine/core";
 import all_button from "../../app.module/app.resources/app.resources.map/icons/button_all.svg";
-
-const filter_parameters = {
-    "Glass": {
-        title: "Стекло",
-        selected: true,
-        backgroundColor: "#ACABEA",
-    },
-    "Plastic": {
-        title: "Пластик",
-        selected: true,
-        backgroundColor: "#F9C96D",
-    },
-    "Metall": {
-        title: "Металл",
-        selected: true,
-        backgroundColor: "#FFB7A7",
-    },
-    "Cardboard": {
-        title: "Картон",
-        selected: true,
-        backgroundColor: "#EDA7FF",
-    },
-    "paper": {
-        title: "Бумага",
-        selected: true,
-        backgroundColor: "#A7F4FF",
-
-    },
-    "Trash": {
-        title: "Вторсырье",
-        selected: true,
-        backgroundColor: "#779DFF",
-    },
-}
+import {useTrashTypeList} from "../../app.module/app.services/app.type.service";
+import {watchObject} from "../../app.module/app.configs/firebase-operations";
 
 const btn_style_default = {
     color: "#1E1E1E",
@@ -60,116 +28,154 @@ const button_area_style = {
 }
 
 const MapFilter = (props) => {
-    const [filter, setFilter] = useState(filter_parameters);
+    const [filter, setFilter] = useState([]);
     const [allFilters, setAllFilters] = useState(true);
+    const trashTypeList = useTrashTypeList();
+
+
+    useEffect( () => {
+        if (trashTypeList.watchedObject != null) {
+            let tempFilter = []
+            trashTypeList.watchedObject.forEach( (element, index) => {
+                let tempElement = {
+                    "id": index,
+                    "name": element.name,
+                    "description": element.description,
+                    "trashTypeId": element.trashTypeId,
+                    "imageUrl": element.imageUrl,
+                    "color": element.color,
+                    "selected": true
+                };
+                tempFilter.push(tempElement);
+            })
+
+            setFilter(tempFilter);
+        }
+
+    },[trashTypeList.watchedObject])
 
     const onAllClick = useCallback(
         () => {
             let t = !allFilters;
             setAllFilters(t);
 
-            Object.entries(filter).map( (e) => {
-                e[1].selected = t;
+            let filterTemp = filter;
+            filterTemp.map( (e) => {
+                e.selected = t;
             })
+            setFilter(filterTemp);
 
+            console.log(filterTemp)
             props.setObjectManagerFilter( () => (object) => {
-                return filter[object.properties.content].selected;
+                return t;
             });
         }, [filter, allFilters],
     )
 
     const onClick = useCallback ((element) => {
-
         setAllFilters(false);
 
         let filterTemp = filter;
         filterTemp[element].selected = !filterTemp[element].selected;
         setFilter(filterTemp);
 
+        console.log(filterTemp)
+
         props.setObjectManagerFilter( () => (object) => {
-            return filter[object.properties.content].selected;
+            let check = false;
+            object.properties.trashTypeIdList.forEach( (e) => {
+                if (filterTemp[e].selected) check = true;
+            })
+            return check;
         });
     }, [filter]
     )
 
     return (
-        <>
-        <div style={{maxHeight: "50px", overflowY: "hidden"}}>
-            <Group noWrap style={button_area_style}>
-                <Button
-                    size="md"
-                    radius="lg"
-                    style={{
-                        ...btn_style_default,
-                        backgroundColor: allFilters ? "#CBEAAB" : "#F5F5F5",
-                    }}
-                    onClick={ () => onAllClick() }
-                >
-                    <img
-                        src={all_button}
-                        alt={"all"}
-                        width={"15px"}
-                        style={{marginRight: "5px"}}
-                    />
-                    Все
-                </Button>
+            <>
                 {
-                    Object.entries(filter).filter((element,index) => {
-                        return index % 2 == 0;
-                    }).map( (e) => {
-                        return (
+                    trashTypeList.watchedObject &&
+                    <div style={{maxHeight: "50px", overflowY: "hidden"}}>
+                        <Group noWrap style={button_area_style}>
                             <Button
-                                    key={e}
-                                    size="md"
-                                    radius="lg"
-                                    style={{
-                                        ...btn_style_default,
-                                        backgroundColor: e[1].selected ? e[1].backgroundColor : "#F5F5F5",
-                                    }}
-                                    onClick={ () => onClick(e[0]) }
+                                size="md"
+                                radius="lg"
+                                style={{
+                                    ...btn_style_default,
+                                    backgroundColor: allFilters ? "#CBEAAB" : "#F5F5F5",
+                                }}
+                                onClick={ () => onAllClick() }
                             >
-                                <span style={{
-                                    ...circle_style,
-                                    backgroundColor: e[1].backgroundColor,
-                                    borderColor: e[1].selected ? "#000" : e[1].backgroundColor,
-                                }}></span>
-                                { e[1].title }
+                                <img
+                                    src={all_button}
+                                    alt={"all"}
+                                    width={"15px"}
+                                    style={{marginRight: "5px"}}
+                                />
+                                Все
                             </Button>
-                        )
-                    })
+                            {
+                                filter.filter((element,index) => {
+                                    return index % 2 == 0;
+                                }).map( (e) => {
+                                    return (
+                                        <Button
+                                            key={e.name}
+                                            size="md"
+                                            radius="lg"
+                                            style={{
+                                                ...btn_style_default,
+                                                backgroundColor: e.selected ? e.color : "#F5F5F5",
+                                            }}
+                                            onClick={ () => onClick(e.id) }
+                                        >
+                            <span style={{
+                                ...circle_style,
+                                backgroundColor: e.color,
+                                borderColor: e.selected ? "#000" : e.color,
+                            }}></span>
+                                            { e.name }
+                                        </Button>
+                                    )
+                                })
+                            }
+                        </Group>
+                    </div>
                 }
-            </Group>
-        </div>
-            <div style={{maxHeight: "50px", overflowY: "hidden"}}>
-                <Group noWrap style={button_area_style}>
-                    {
-                        Object.entries(filter).filter((element, index) => {
-                            return index % 2 == 1;
-                        }).map( (e) => {
-                            return (
-                                <Button
-                                    key={e}
-                                    size="md"
-                                    radius="lg"
-                                    style={{
-                                        ...btn_style_default,
-                                        backgroundColor: e[1].selected ? e[1].backgroundColor : "#F5F5F5",
-                                    }}
-                                    onClick={ () => onClick(e[0]) }
-                                >
-                                <span style={{
-                                    ...circle_style,
-                                    backgroundColor: e[1].backgroundColor,
-                                    borderColor: e[1].selected ? "#000" : e[1].backgroundColor,
-                                }}></span>
-                                    { e[1].title }
-                                </Button>
-                            )
-                        })
-                    }
-                </Group>
-            </div>
-        </>
+
+                {
+                    trashTypeList.watchedObject &&
+                    <div style={{maxHeight: "50px", overflowY: "hidden"}}>
+                        <Group noWrap style={button_area_style}>
+                            {
+                                filter.filter((element, index) => {
+                                    return index % 2 == 1;
+                                }).map( (e) => {
+                                    return (
+                                        <Button
+                                            key={e.name}
+                                            size="md"
+                                            radius="lg"
+                                            style={{
+                                                ...btn_style_default,
+                                                backgroundColor: e.selected ? e.color : "#F5F5F5",
+                                            }}
+                                            onClick={ () => onClick(e.id) }
+                                        >
+                            <span style={{
+                                ...circle_style,
+                                backgroundColor: e.color,
+                                borderColor: e.selected ? "#000" : e.color,
+                            }}></span>
+                                            { e.name }
+                                        </Button>
+                                    )
+                                })
+                            }
+                        </Group>
+                    </div>
+                }
+            </>
     );
 };
 
