@@ -1,6 +1,7 @@
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../app.configs";
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
 
 export const LoginLayout = () => {
 
@@ -13,9 +14,11 @@ export const LoginLayout = () => {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
+    let navigate = useNavigate();
 
     const login = () => {
         signInWithEmailAndPassword(email, password)
+        //navigate("/welcome")
     };
 
     return (

@@ -39,7 +39,7 @@ class Scanner extends React.Component {
             "App [result]", decodedText, decodedResult);
         console.log(decodedResult.result.format.formatName)
         console.log(decodedText)
-        if (decodedResult.result.format.format === 9) {
+        if (decodedResult.result.format.format === 9 || decodedResult.result.format.format === 10) {
             console.log(
                 "App barcode[result]", decodedText, decodedResult);
             this.props.history(`/barcode/${decodedText}`);

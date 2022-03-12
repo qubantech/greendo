@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../app.module/app.configs";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -17,6 +17,7 @@ import Carousel2 from "../profile.module/img/carousel1.svg";
 import Carousel3 from "../profile.module/img/carousel3.png";
 //@ts-ignore
 import Carousel4 from "../profile.module/img/сarousel4.png";
+import InfoModal from "./infoModal";
 
 const informations = {
     1: {
@@ -34,12 +35,17 @@ const informations = {
 }
 
 
-
-
 const Handbook = () => {
     const [user, loading, error] = useAuthState(auth);
     let navigate = useNavigate();
     let location = useLocation();
+
+    const [open, setOpen] = useState(false);
+    const [children, setChildren] = useState<JSX.Element>();
+    const modalinfo = (obj:JSX.Element) => {
+        setOpen(true);
+        setChildren(obj);
+    }
 
     useEffect(() => {
         if (!user){
@@ -48,6 +54,7 @@ const Handbook = () => {
     },[]);
     return (
         <Container>
+            <InfoModal isOpen={open} setOpen={setOpen} children={children || <div></div>}/>
             <Space h={"md"}/>
             <Swiper
                 direction={"horizontal"}
@@ -74,7 +81,7 @@ const Handbook = () => {
                 console.log(obj)
                 return (
                     <>
-                        <Card sx={{backgroundColor:"#EEF6FF"}}  shadow="sm" p="lg">
+                        <Card onClick={() => modalinfo(obj[1].desc)} sx={{backgroundColor:"#EEF6FF"}}  shadow="sm" p="lg">
                             <Grid>
                                 <Grid.Col span={11}>
                                     <Text size={"md"}>{obj[1].title}</Text>

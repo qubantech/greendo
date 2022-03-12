@@ -3,20 +3,34 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../app.module/app.configs";
 import {useNavigate} from "react-router-dom";
 import Navigation from "../../app.module/app.layouts/app.navigation/navigation";
-import {ActionIcon, Card, Container, Grid, Space, Text, Title} from "@mantine/core";
+import {ActionIcon, Card, Container, Grid, Group, Image, Space, Text, Title} from "@mantine/core";
 import {useGiveawayList} from "../../app.module/app.services/app.giveaway.service";
-import {useSaleList} from "../../app.module/app.services/app.sale.service";
+import {useOrderSale, useSaleList} from "../../app.module/app.services/app.sale.service";
+// @ts-ignore
+import green from "../profile.module/img/greens.svg";
 
 const Exchange = () => {
     const [user, loading, error] = useAuthState(auth);
     const giveaway = useGiveawayList()
     const sale = useSaleList()
     const navigate = useNavigate()
+    const buysale = useOrderSale(user?.uid || "s")
     useEffect(() => {
         if (!user){
             navigate("/");
         }
     },[]);
+    const sales = (id:number) => {
+        console.log(id)
+        buysale(id)
+            .then((res)=> {
+                console.log("sas")
+            console.log(res)
+        })
+            .catch((error) => {
+               console.log(error)
+            })
+    }
     return (
         <>
             {user && <Navigation/>}
@@ -28,29 +42,38 @@ const Exchange = () => {
                 {/*{giveaway.watchedObject}*/}
                 {sale.watchedObject && Object.entries(sale.watchedObject).map((obj) => {
                     console.log(obj)
-                    return (<></>
-                        /*<Card sx={{backgroundColor:"#EEF6FF"}} key={obj.} shadow="sm" p="md">
+                    return (
+                        <>
+                        <Card onClick={() => sales(obj[1]?.saleId || 0)} sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="md">
                             <Grid gutter={"md"}>
                                 <Grid.Col gutter={20} span={2}>
                                     <ActionIcon size={45} style={{backgroundColor:"blue"}}  radius={"xl"}>
                                         <div></div>
                                     </ActionIcon>
                                 </Grid.Col>
-                                <Grid.Col span={8} >
+                                <Grid.Col span={6} >
                                     <Text size={"lg"} weight={"bold"}>
-                                        {//@ts-ignore
-                                            orglist.watchedObject && orglist.watchedObject[Number(obj.subscriptionId)].brand || "Brand"}
+                                        {
+                                            obj[1]?.brand
+                                        }
                                     </Text>
-                                    <Text color={"blue"} size={"sm"}> Greengo добавил {
-                                        userdata.watchedObject && Math.floor(Number(Math.floor(userdata.watchedObject?.level / 100)+1)*1.1*obj.sum-obj.sum) } руб
+                                    <Text color={"blue"} size={"sm"}>
+                                        { obj[1]?.description}
                                     </Text>
                                 </Grid.Col>
-                                <Grid.Col span={2} sx={{paddingLeft:"5vw"}}>
-                                    <Text>{obj.sum}</Text>
-                                    <Text size={"xs"}>руб/месяц</Text>
+                                <Grid.Col span={4} sx={{paddingLeft:"5vw"}}>
+                                    <Group align={"right"} grow>
+                                        <Text>Скидка {Number(obj[1]?.value) * 100}%</Text>
+                                    </Group>
+                                    <Group direction={"row"} align={"left"} spacing={5}>
+                                        <Image width={18} src={green}/>
+                                        <Text size={"sm"}>{obj[1]?.price} G</Text>
+                                    </Group>
                                 </Grid.Col>
                             </Grid>
-                        </Card>*/
+                        </Card>
+                            <Space h={"md"}/>
+                        </>
                     )
 
                 })}

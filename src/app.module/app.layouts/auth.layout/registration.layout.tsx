@@ -1,6 +1,7 @@
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../app.configs";
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
 
 export const RegistrationLayout = () => {
 
@@ -13,9 +14,11 @@ export const RegistrationLayout = () => {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
+    const navigate = useNavigate()
 
     const register = () => {
         createUserWithEmailAndPassword(email, password)
+        navigate("/welcome")
     }
 
     return (
