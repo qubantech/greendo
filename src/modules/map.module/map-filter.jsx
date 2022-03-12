@@ -1,8 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Button, Group} from "@mantine/core";
-import all_button from "../../app.module/app.resources/app.resources.map/icons/button_all.svg";
 import {useTrashTypeList} from "../../app.module/app.services/app.type.service";
-import {watchObject} from "../../app.module/app.configs/firebase-operations";
 
 const btn_style_default = {
     color: "#1E1E1E",
@@ -29,9 +27,7 @@ const button_area_style = {
 
 const MapFilter = (props) => {
     const [filter, setFilter] = useState([]);
-    const [allFilters, setAllFilters] = useState(true);
     const trashTypeList = useTrashTypeList();
-
 
     useEffect( () => {
         if (trashTypeList.watchedObject != null) {
@@ -44,49 +40,41 @@ const MapFilter = (props) => {
                     "trashTypeId": element.trashTypeId,
                     "imageUrl": element.imageUrl,
                     "color": element.color,
-                    "selected": true
+                    "selected": false
                 };
                 tempFilter.push(tempElement);
             })
-
+            tempFilter[0].selected = true;
             setFilter(tempFilter);
         }
 
     },[trashTypeList.watchedObject])
 
-    const onAllClick = useCallback(
-        () => {
-            let t = !allFilters;
-            setAllFilters(t);
-
-            let filterTemp = filter;
-            filterTemp.map( (e) => {
-                e.selected = t;
-            })
-            setFilter(filterTemp);
-
-            console.log(filterTemp)
-            props.setObjectManagerFilter( () => (object) => {
-                return t;
-            });
-        }, [filter, allFilters],
-    )
-
     const onClick = useCallback ((element) => {
-        setAllFilters(false);
 
         let filterTemp = filter;
         filterTemp[element].selected = !filterTemp[element].selected;
         setFilter(filterTemp);
 
-        console.log(filterTemp)
+        // console.log(filterTemp)
 
         props.setObjectManagerFilter( () => (object) => {
-            let check = false;
-            object.properties.trashTypeIdList.forEach( (e) => {
-                if (filterTemp[e].selected) check = true;
+            let check = true;
+            // console.log(filter)
+
+            let selectedFilter = filter.filter( (e) => {
+                return e.selected
             })
-            return check;
+
+            selectedFilter.forEach( (e) => {
+                // console.log(object.properties.trashTypeIdList.includes(e.id))
+
+                // console.log(e)
+                if (object.properties.trashTypeIdList.includes(e.id) == false) check = false;
+            })
+
+            // console.log(check)
+            return check && selectedFilter.length !== 0;
         });
     }, [filter]
     )
@@ -97,23 +85,6 @@ const MapFilter = (props) => {
                     trashTypeList.watchedObject &&
                     <div style={{maxHeight: "50px", overflowY: "hidden"}}>
                         <Group noWrap style={button_area_style}>
-                            <Button
-                                size="md"
-                                radius="lg"
-                                style={{
-                                    ...btn_style_default,
-                                    backgroundColor: allFilters ? "#CBEAAB" : "#F5F5F5",
-                                }}
-                                onClick={ () => onAllClick() }
-                            >
-                                <img
-                                    src={all_button}
-                                    alt={"all"}
-                                    width={"15px"}
-                                    style={{marginRight: "5px"}}
-                                />
-                                Все
-                            </Button>
                             {
                                 filter.filter((element,index) => {
                                     return index % 2 == 0;

@@ -26,7 +26,7 @@ const button_style = {
 }
 
 const Map = () => {
-    const [objectManagerFilter, setObjectManagerFilter] = useState(() => () => true);
+    const [objectManagerFilter, setObjectManagerFilter] = useState(() => (object) => false);
     const [user, loading, error] = useAuthState(auth);
     const containerList = useContainerList();
     const [features, setFeatures] = useState({})
@@ -69,40 +69,41 @@ const Map = () => {
                 tempFeatures.features.push(tempElement);
             })
             setFeatures(tempFeatures);
+            setObjectManagerFilter(() => (object) => object.properties.trashTypeIdList.includes(0))
         }
     }, [containerList.watchedObject])
 
     return (
         <div style={ map_model_style }>
-            <Container style={ map_header_style }>
-                {
-                    user && <Navigation/>
-                }
-                <Text size="xl" weight="bold" style={{marginBottom:"14px"}}>г. Краснодар</Text>
-                <Grid justify="space-between">
-                    <Grid.Col span={6}>
-                        <Button size="md" fullWidth={true} radius="lg" style={button_style} onClick={onNearestClick}>
-                            Ближайшие пункты
-                        </Button>
-                    </Grid.Col>
-                    <Grid.Col span={6}>
-                        <Button size="md" fullWidth={true} radius="lg" style={button_style}>
-                            <img
-                                src={point_bonus}
-                                alt={"bonus"}
-                                style={{marginRight:"3px"}}
-                            />
-                            Самые выгодные
-                        </Button>
-                    </Grid.Col>
-                </Grid>
-                <Divider my="sm" />
-                <MapFilter setObjectManagerFilter={ setObjectManagerFilter }/>
-            </Container>
             {
                 containerList.watchedObject &&
-                <MapContainer objectManagerFilter={ objectManagerFilter } features={ features } state={mapState}/>
+                <Container style={ map_header_style }>
+                    {
+                        user && <Navigation/>
+                    }
+                    <Text size="xl" weight="bold" style={{marginBottom:"14px"}}>г. Краснодар</Text>
+                    <Grid justify="space-between">
+                        <Grid.Col span={6}>
+                            <Button size="md" fullWidth={true} radius="lg" style={button_style}>
+                                Ближайшие пункты
+                            </Button>
+                        </Grid.Col>
+                        <Grid.Col span={6}>
+                            <Button size="md" fullWidth={true} radius="lg" style={button_style}>
+                                <img
+                                    src={point_bonus}
+                                    alt={"bonus"}
+                                    style={{marginRight:"3px"}}
+                                />
+                                Самые выгодные
+                            </Button>
+                        </Grid.Col>
+                    </Grid>
+                    <Divider my="sm" />
+                    <MapFilter setObjectManagerFilter={ setObjectManagerFilter }/>
+                </Container>
             }
+            <MapContainer objectManagerFilter={ objectManagerFilter } features={ features }/>
         </div>
     )
 };

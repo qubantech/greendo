@@ -28,6 +28,7 @@ const mapContainerStyle = {
     // marginBottom:"50px",
     width:"100vw",
     height: "65vh",
+    boxShadow:"0px 40px 20px -10px  rgba(48, 48, 48, 0.1) inset",
 }
 
 const MapContainer = (props) => {
