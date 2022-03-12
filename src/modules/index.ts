@@ -7,6 +7,7 @@ import Profile from './profile.module/profile.module';
 import WelcomeGuide from './welcome-guide.module/welcome-guide.module';
 import barcodeHandler from "./camera.module/Handlers/barcodeHandler";
 import qrHandler from "./camera.module/Handlers/qrHandler";
+import ExchangeModule from "./exchange.module/exchange.module";
 
 export const CommonModules = [
     Camera,
@@ -17,5 +18,6 @@ export const CommonModules = [
     Profile,
     WelcomeGuide,
     barcodeHandler,
-    qrHandler
+    qrHandler,
+    ExchangeModule
 ]

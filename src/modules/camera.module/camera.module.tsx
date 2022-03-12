@@ -34,7 +34,7 @@ const Camera = () => {
 
     return (
         <>
-            <SegmentedControl
+            <SegmentedControl size={"xl"} fullWidth
                 data={[
                     {
                         value: TAB_TYPE.CAMERA,

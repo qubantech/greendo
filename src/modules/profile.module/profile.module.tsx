@@ -128,14 +128,14 @@ const Profile = () => {
             <Group spacing={"md"} direction={"row"} grow align={"apart"}>
                 <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">Токены за месяц</Card>
                 <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">
-                    Ты в рейтинге по городу на:
+                    Ты в рейтинге по городу {userdata.watchedObject?.city} на:
                     <Text size={"xl"} weight={"bold"}>249 место</Text>
                 </Card>
             </Group>
             <Space h={"xl"}/>
             <Grid grow>
                 <Grid.Col span={7}>
-                    <Button radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth leftIcon={<LoopIcon/>}>Обмен токенов</Button>
+                    <Button onClick={() => navigate("/exchange")} radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth leftIcon={<LoopIcon/>}>Обмен токенов</Button>
                 </Grid.Col>
                 <Grid.Col span={4}>
                     <Button radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth>Статистика</Button>

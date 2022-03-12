@@ -1,5 +1,6 @@
 import React from 'react';
 import CameraPhoto, { FACING_MODES } from 'jslib-html5-camera-photo';
+import {Button, Group} from "@mantine/core";
 
 class PhotoCamera extends React.Component {
 
@@ -52,19 +53,23 @@ class PhotoCamera extends React.Component {
 
     render () {
         return (
-            <div>
-                <button onClick={ () => {
-                    this.takePhoto();
-                }}> Take photo </button>
+            <Group direction={"row"} align={"center"} style={{height: "90vh"}}>
+                <Group>
                 <video
+                    style={{width: "100vw"}}
                     ref={this.videoRef}
                     autoPlay="true"
                 />
-                <img
+                <Button fullWidth onClick={ () => {
+                    this.takePhoto();
+                }}> Take photo </Button>
+                </Group>
+                {this.state.dataUri && <img
+                    style={{width: "100vw"}}
                     alt="imgCamera"
                     src={this.state.dataUri}
-                />
-            </div>
+                />}
+            </Group>
         );
     }
 }
