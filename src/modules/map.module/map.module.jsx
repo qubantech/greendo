@@ -8,6 +8,8 @@ import Navigation from "../../app.module/app.layouts/app.navigation/navigation";
 import {auth} from "../../app.module/app.configs";
 import {useContainerList} from "../../app.module/app.services/app.container.service";
 
+import placemark from "../../app.module/app.resources/app.resources.map/icons/point_icon.svg";
+
 const map_model_style = {
     // height: "100vh",
     overflow: "hidden",
@@ -38,6 +40,8 @@ const Map = () => {
 
     }
 
+
+
     useEffect(() => {
         if (containerList.watchedObject != null) {
             let tempFeatures = {
@@ -63,7 +67,9 @@ const Map = () => {
                         "address": element.address,
                     },
                     "options": {
-                        "preset": "islands#blueFamilyCircleIcon"
+                        iconLayout: "default#image",
+                        iconImageHref: placemark,
+                        iconImageSize: [30, 49],
                     }
                 }
                 tempFeatures.features.push(tempElement);
@@ -84,7 +90,7 @@ const Map = () => {
                     <Text size="xl" weight="bold" style={{marginBottom:"14px"}}>г. Краснодар</Text>
                     <Grid justify="space-between">
                         <Grid.Col span={6}>
-                            <Button size="md" fullWidth={true} radius="lg" style={button_style}>
+                            <Button size="md" fullWidth={true} radius="lg" style={button_style} onClick={onNearestClick}>
                                 Ближайшие пункты
                             </Button>
                         </Grid.Col>
@@ -103,7 +109,7 @@ const Map = () => {
                     <MapFilter setObjectManagerFilter={ setObjectManagerFilter }/>
                 </Container>
             }
-            <MapContainer objectManagerFilter={ objectManagerFilter } features={ features }/>
+            <MapContainer objectManagerFilter={ objectManagerFilter } features={ features } state={mapState}/>
         </div>
     )
 };

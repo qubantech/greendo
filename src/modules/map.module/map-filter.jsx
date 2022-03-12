@@ -32,6 +32,7 @@ const MapFilter = (props) => {
     useEffect( () => {
         if (trashTypeList.watchedObject != null) {
             let tempFilter = []
+            console.log(trashTypeList.watchedObject )
             trashTypeList.watchedObject.forEach( (element, index) => {
                 let tempElement = {
                     "id": index,
@@ -70,7 +71,7 @@ const MapFilter = (props) => {
                 // console.log(object.properties.trashTypeIdList.includes(e.id))
 
                 // console.log(e)
-                if (object.properties.trashTypeIdList.includes(e.id) == false) check = false;
+                if (object.properties.trashTypeIdList.includes(e.id) === false) check = false;
             })
 
             // console.log(check)
@@ -87,7 +88,7 @@ const MapFilter = (props) => {
                         <Group noWrap style={button_area_style}>
                             {
                                 filter.filter((element,index) => {
-                                    return index % 2 == 0;
+                                    return index % 2 === 0;
                                 }).map( (e) => {
                                     return (
                                         <Button
@@ -120,7 +121,7 @@ const MapFilter = (props) => {
                         <Group noWrap style={button_area_style}>
                             {
                                 filter.filter((element, index) => {
-                                    return index % 2 == 1;
+                                    return index % 2 === 1;
                                 }).map( (e) => {
                                     return (
                                         <Button

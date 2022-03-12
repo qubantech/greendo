@@ -3,5 +3,5 @@ export function encryptPayload(payload: any): string {
 }
 
 export function decryptCode(code: string): any {
-    return JSON.parse(code)
+    return JSON.parse(JSON.parse(code))
 }
