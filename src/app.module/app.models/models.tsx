@@ -33,6 +33,7 @@ type Fundomate = {
     trashTypeIdList: number[],
     takeoutList: Takeout[],
     capacityMap: {[capacity: number]: number} // trashTypeId -> filled [0..1]
+    priceMap: {[price: number]: number} // trashTypeId -> filled [0..1]
 }
 
 type Container = {
