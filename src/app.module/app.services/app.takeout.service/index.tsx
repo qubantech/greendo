@@ -2,7 +2,7 @@ import {useWatchedObject} from "../app.realtimedb.service";
 import {Fundomate, Takeout} from "../../app.models/models";
 import {decryptCode} from "../app.jwt.service";
 import {useUser} from "../app.user.service";
-import {getObject} from "../../app.configs/firebase-operations";
+import {getObject, putObject} from "../../app.configs/firebase-operations";
 
 export function useTakeout(takeoutId: number) {
     return useWatchedObject<Takeout>(`/takeouts/${takeoutId}`)
@@ -46,8 +46,17 @@ export function useHandleTakeoutCode(userId: string) {
                     } else {
                         user.takeoutList.push(t)
                     }
+
+                    for (let typeIndex = 0; typeIndex < 13; typeIndex++) {
+                        if (t.trashTypeCountMap.hasOwnProperty(typeIndex)) {
+                            user.tokens += t.trashTypeCountMap[typeIndex] * t.trashTypePriceMap[typeIndex]
+                        }
+                    }
+                    // @ts-ignore
+                    fundomate.capacityMap = obj.filled
                     setUser(user)
-                    return Promise.resolve()
+                    // @ts-ignore
+                    return putObject<Fundomate>(`/fundomates/${obj.fundomateId}`, fundomate)
                 }
                 return Promise.reject()
             })
