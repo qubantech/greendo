@@ -18,16 +18,16 @@ const placeMarkDescriptionStyle = {
     boxShadow:"-10px 4px 20px rgba(48, 48, 48, 0.1)",
     padding: "27px",
     overflow: "hidden",
-    marginBottom:"50px"
+    // marginBottom:"50px"
 }
 
 const mapContainerStyle = {
-    // position:"absolute",
-    // bottom:0,
+    position:"absolute",
+    bottom:0,
     padding:0,
-    // marginBottom:"50px",
+    marginBottom:"150px",
     width:"100vw",
-    height: "65vh",
+    // height: "100%",
     boxShadow:"0px 40px 20px -10px  rgba(48, 48, 48, 0.1) inset",
 }
 
@@ -39,9 +39,11 @@ const MapContainer = (props) => {
     };
     return (
         <>
-            <Container style={mapContainerStyle}>
+            <Container style={{
+                ...mapContainerStyle,
+            }}>
                 <YMaps>
-                    <Map state={props.state} width={ "100%" } height={ "100%" }>
+                    <Map state={props.state} width={ "100%" } height={  props.mapMode === "containers" ? "46vh" : "60vh" }>
                         <ObjectManagerContainer
                             features={ props.features }
                             onPlacemarkClick={ onPlacemarkClick }
@@ -49,7 +51,7 @@ const MapContainer = (props) => {
                         />
                     </Map>
                 </YMaps>
-                {selectedPoint && (
+                {selectedPoint && props.mapMode === "containers" && (
                     <div style={placeMarkDescriptionStyle}>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
                             <Text size="lg" style={{marginBottom: "14px", }}>{selectedPoint.title && selectedPoint.title || "Контейнер"}</Text>
@@ -67,13 +69,13 @@ const MapContainer = (props) => {
                         </Text>
                         <Text size="sm">
                             <img
-                                height={"17px"}
-                                width={"17px"}
+                                height={"20px"}
+                                width={"20px"}
                                 src={point_bonus}
                                 alt={"bonus"}
-                                style={{verticalAlign: "middle", paddingRight: "10px"}}
+                                style={{verticalAlign: "middle", paddingRight: "13px", paddingLeft: "3px"}}
                             />
-                            {selectedPoint.properties.description && selectedPoint.properties.description || "Контейнер доступен"}
+                            Контейнер доступен
                         </Text>
                     </div>
                 )}

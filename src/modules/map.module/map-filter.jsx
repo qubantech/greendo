@@ -97,7 +97,7 @@ const MapFilter = (props) => {
                                             radius="lg"
                                             style={{
                                                 ...btn_style_default,
-                                                backgroundColor: e.selected ? e.color : "#F5F5F5",
+                                                backgroundColor: e.selected ? e.color : "#EEF6FF",
                                             }}
                                             onClick={ () => onClick(e.id) }
                                         >
@@ -130,7 +130,7 @@ const MapFilter = (props) => {
                                             radius="lg"
                                             style={{
                                                 ...btn_style_default,
-                                                backgroundColor: e.selected ? e.color : "#F5F5F5",
+                                                backgroundColor: e.selected ? e.color : "#EEF6FF",
                                             }}
                                             onClick={ () => onClick(e.id) }
                                         >
