@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
-import {Button, Progress, Space, Text} from "@mantine/core";
+import React, {useEffect, useState} from 'react';
+import {Button, Center, Container, Grid, Group, Progress, Space, Text} from "@mantine/core";
 import QRCode from "react-qr-code";
 import {encryptPayload} from "../../app.module/app.services/app.jwt.service";
 import {useUuid} from "@mantine/hooks";
 
 const Emulator = () => {
-    const fundomateId = Math.round(Math.random() * 5)
+    //let fundomateId = 0
+
+    const [fundomateId, setFundomateId] = useState(Math.round(Math.random() * 5))
 
     const [filled, setFilled] = useState({0: 0.0, 1: 0.0, 3: 0.0, 8: 0.0})
     const volume = {0: 0.025, 1: 0.025, 3: 0.05, 8: 0.01}
@@ -13,6 +15,7 @@ const Emulator = () => {
     const [started, setStarted] = useState(false)
     const [finished, setFinished] = useState(false)
     const [thrownMap, setThrownMap] = useState({})
+    const [localAdd, setLocalAdd] = useState({0:0.0, 1:0.0, 3:0.0, 8:0.0})
 
     const start = () => {
         setStarted(true)
@@ -30,11 +33,13 @@ const Emulator = () => {
             // @ts-ignore
             thrownMap[typeId] = 1
         } else {
-            // @ts-ignore
+            // @ts-ignoreconst
             thrownMap[typeId] += 1
         }
         // @ts-ignore
         filled[typeId] += volume[typeId];
+        // @ts-ignore
+        localAdd[typeId] += volume[typeId];
         setFilled({...filled})
         setThrownMap({...thrownMap})
     }
@@ -42,51 +47,57 @@ const Emulator = () => {
     // @ts-ignore
     const isVisible = (typeId: number) => (1.0 - filled[typeId] < volume[typeId])
     const uuid = useUuid()
+    console.log(thrownMap)
     return (
-        <>
+        <Container>
             <Text size={"lg"} align={"center"} weight={"bold"}>FundomateID: {fundomateId}</Text>
             <Space h={"lg"}/>
-            <Text align={"center"}>Пластиковые бутылки</Text>
+            <Text align={"center"}>Пластиковые бутылки {"+" + Math.floor(1/volume[0] * localAdd[0]) || " "}</Text>
             <Progress value={filled[0] * 100}/>
             <Space h={"xs"}/>
-            <Text align={"center"}>Алюминевые банки</Text>
+            <Text align={"center"}>Алюминевые банки {"+" +  Math.floor(1/volume[1] * localAdd[1]) || " "}</Text>
             <Progress value={filled[1] * 100}/>
             <Space h={"xs"}/>
-            <Text align={"center"}>Стеклянные бутылки</Text>
+            <Text align={"center"}>Стеклянные бутылки {"+" +  Math.floor(1/volume[3] * localAdd[3]) || " "}</Text>
             <Progress value={filled[3] * 100}/>
             <Space h={"xs"}/>
-            <Text align={"center"}>Крышечки (металлические)</Text>
+            <Text align={"center"}>Крышечки (металлические) {"+" +  Math.floor(1/volume[8] * localAdd[8]) || " "}</Text>
             <Progress value={filled[8] * 100}/>
             <Space h={"xs"}/>
             {!started &&
                 <Button fullWidth onClick={() => start()}>Начать</Button>
             }
-            <p>{JSON.stringify(thrownMap)}</p>
+            <Text size={"sm"}>{JSON.stringify(thrownMap)}</Text>
             {
-                started && (<>
-                        <Button disabled={isVisible(0)} onClick={() => takeout(0)}>Пластиковая
-                            бутылка</Button>
-                        <Button disabled={isVisible(1)} onClick={() => takeout(1)}>Алюминиевая
+                started && (
+                    <Group spacing={5} align={"center"} grow direction={'column'}>
+                        <Button fullWidth disabled={isVisible(0)} onClick={() => takeout(0)}>Пластиковая
+                                бутылка</Button>
+                        <Button fullWidth disabled={isVisible(1)} onClick={() => takeout(1)}>Алюминиевая
                             банка</Button>
-                        <Button disabled={isVisible(3)} onClick={() => takeout(3)}>Стеклянная
+                        <Button fullWidth disabled={isVisible(3)} onClick={() => takeout(3)}>Стеклянная
                             бутылка</Button>
-                        <Button disabled={isVisible(8)} onClick={() => takeout(8)}>Крышечка</Button>
-                    </>
+                        <Button fullWidth disabled={isVisible(8)} onClick={() => takeout(8)}>Крышечка</Button>
+                        <Space h={"md"}/>
+                    </Group>
                 )
             }
             {started &&
-                <Button onClick={() => stop()}>Закончить</Button>
+                <Button fullWidth onClick={() => stop()}>Закончить</Button>
             }
 
             {finished &&
-                <QRCode value={encryptPayload(JSON.stringify({
-                    thrown: thrownMap,
-                    fundomateId: fundomateId,
-                    timestamp: new Date().getTime(),
-                    filled: filled
-                }))}/>}
+                <Center>
+                    <QRCode value={encryptPayload(JSON.stringify({
+                        thrown: thrownMap,
+                        fundomateId: fundomateId,
+                        timestamp: new Date().getTime(),
+                        filled: filled
+                    }))}/>
+                </Center>
+            }
 
-        </>
+        </Container>
     );
 }
 export default {
