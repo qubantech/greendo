@@ -5,6 +5,9 @@ import ObjectManagerContainer from "./object-manager-container";
 import point_address from "../../app.module/app.resources/app.resources.map/icons/point_address.svg";
 import point_bonus from "../../app.module/app.resources/app.resources.map/icons/point_bonus.svg";
 import {Cross1Icon} from "@radix-ui/react-icons";
+import ContainerInfo from "./container-info";
+import FundomatInfo from "./fundomat-info";
+import purse from "../../app.module/app.resources/app.resources.map/icons/purse.svg";
 
 
 const placeMarkDescriptionStyle = {
@@ -15,7 +18,7 @@ const placeMarkDescriptionStyle = {
     maxWidth: "87vw",
     backgroundColor:"white",
     borderRadius:"16px 16px 0px 0px",
-    boxShadow:"-10px 4px 20px rgba(48, 48, 48, 0.1)",
+    boxShadow:"-10px -5px 20px rgba(48, 48, 48, 0.2)",
     padding: "27px",
     overflow: "hidden",
     // marginBottom:"50px"
@@ -25,7 +28,7 @@ const mapContainerStyle = {
     position:"absolute",
     bottom:0,
     padding:0,
-    marginBottom:"150px",
+    marginBottom:"97px",
     width:"100vw",
     // height: "100%",
     boxShadow:"0px 40px 20px -10px  rgba(48, 48, 48, 0.1) inset",
@@ -33,8 +36,10 @@ const mapContainerStyle = {
 
 const MapContainer = (props) => {
     const [selectedPoint, setSelectedPoint] = useState(null)
+    const [isOpened, setIsOpened] = useState(false);
 
     const onPlacemarkClick = (point) => {
+        setIsOpened(true);
         setSelectedPoint(point);
     };
     return (
@@ -43,7 +48,7 @@ const MapContainer = (props) => {
                 ...mapContainerStyle,
             }}>
                 <YMaps>
-                    <Map state={props.state} width={ "100%" } height={  props.mapMode === "containers" ? "46vh" : "60vh" }>
+                    <Map state={props.state} width={ "100%" } height={  props.mapMode === "containers" ? "52vh" : "65vh" }>
                         <ObjectManagerContainer
                             features={ props.features }
                             onPlacemarkClick={ onPlacemarkClick }
@@ -52,10 +57,19 @@ const MapContainer = (props) => {
                     </Map>
                 </YMaps>
                 {selectedPoint && props.mapMode === "containers" && (
-                    <div style={placeMarkDescriptionStyle}>
+                    // <ContainerInfo
+                    //     placeMarkDescriptionStyle={placeMarkDescriptionStyle}
+                    //     selectedPoint={selectedPoint}
+                    //     setSelectedPoint={setSelectedPoint}
+                    // />
+                    <div style={{ ...placeMarkDescriptionStyle }}>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
                             <Text size="lg" style={{marginBottom: "14px", }}>{selectedPoint.title && selectedPoint.title || "Контейнер"}</Text>
-                            <Cross1Icon style={{fontSize: "20px"}} onClick={() => setSelectedPoint(null)}/>
+                            <Cross1Icon style={{fontSize: "20px"}}
+                                        onClick={() => {
+                                            setSelectedPoint(null);
+                                        }}
+                            />
                         </div>
                         <Text size="sm" style={{marginBottom: "14px", color:"#5C5C5C" }}>
                             <img
@@ -79,6 +93,40 @@ const MapContainer = (props) => {
                         </Text>
                     </div>
                 )}
+
+                {selectedPoint && props.mapMode === "fundomates" && (
+                    // <FundomatInfo placeMarkDescriptionStyle={placeMarkDescriptionStyle}/>
+                    <div style={{...placeMarkDescriptionStyle}}>
+                        <div style={{display: "flex", justifyContent: "space-between"}}>
+                            <Text size="lg" style={{marginBottom: "14px", }}>{selectedPoint.id && selectedPoint.id || "Контейнер"}</Text>
+                            <Cross1Icon style={{fontSize: "20px"}}
+                                        onClick={() => {
+                                            setSelectedPoint(null);
+                                        }}
+                            />                        </div>
+                        <Text size="sm" style={{marginBottom: "14px", color:"#5C5C5C" }}>
+                            <img
+                                height={"26px"}
+                                width={"26px"}
+                                src={purse}
+                                alt={"address"}
+                                style={{verticalAlign: "middle", paddingRight: "10px"}}
+                            />
+                            Здесь вы получите 10 гринов
+                        </Text>
+                        <Text size="sm">
+                            <img
+                                height={"20px"}
+                                width={"20px"}
+                                src={point_bonus}
+                                alt={"purse"}
+                                style={{verticalAlign: "middle", paddingRight: "13px", paddingLeft: "3px"}}
+                            />
+                            Контейнер заполнен на 20% процентов
+                        </Text>
+                    </div>
+                )}
+
             </Container>
         </>
     )

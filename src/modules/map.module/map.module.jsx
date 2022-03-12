@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import MapContainer from "./map-container.module";
-import {Button, Container, Divider, SegmentedControl, Text} from "@mantine/core";
+import {Button, Container, Divider, SegmentedControl, Skeleton, Text} from "@mantine/core";
 import MapFilter from "./map-filter";
 import {useAuthState} from "react-firebase-hooks/auth";
 import Navigation from "../../app.module/app.layouts/app.navigation/navigation";
@@ -91,7 +91,6 @@ const Map = () => {
                 "type": "FeatureCollection",
                 "features": []
             };
-            console.log(fundomateList.watchedObject)
 
             fundomateList.watchedObject.forEach( (element, index) => {
                 let tempElement = {
@@ -125,14 +124,11 @@ const Map = () => {
     useEffect( () => {
         if (mapMode === "fundomates") {
             setFeatures(fundomates);
-            console.log(fundomates)
             setObjectManagerFilter(() => (object) => true)
         } else {
             setFeatures(containers);
-            console.log(containers)
             setObjectManagerFilter(() => (object) => object.properties.trashTypeIdList.includes(0))
         }
-        console.log(features)
     }, [mapMode])
 
 
@@ -172,7 +168,7 @@ const Map = () => {
                 width:"100%",
                 position: "absolute",
                 bottom: 0,
-                marginBottom: "75px",
+                marginBottom: "50px",
             }}>
                 <SegmentedControl
                     value={mapMode}
