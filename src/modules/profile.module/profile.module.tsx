@@ -75,6 +75,30 @@ const Profile = () => {
     let navigate = useNavigate();
     let location = useLocation();
 
+    const lasttokens = () => {
+        let x_month:number = 0
+        console.log(userdata.watchedObject?.takeoutList)
+        userdata.watchedObject?.takeoutList.map((obj,index) =>{
+            let date = new Date();
+            date.setMonth(date.getMonth()+1)
+            if(date > new Date(obj.timestamp)) {
+                let q:number = 0;
+                Object.entries(obj.trashTypeCountMap).map((obj1, index1) => {
+                    // @ts-ignore
+                    let values = Object.keys(userdata.watchedObject.takeoutList[index].trashTypePriceMap)
+                    console.log(values);
+                    /*if (Number(keys[index1]) == Number(obj1[0])) {*/
+                        q += Number(Number(obj.trashTypePriceMap[Number(values[index1])]) * Number(obj1[1]))
+                    //}
+                })
+                console.log(q)
+                x_month += Number(q);
+            }
+        })
+        console.log(x_month)
+        return x_month
+    }
+
     let x:number
     useEffect(() => {
         console.log(user?.uid)
@@ -144,7 +168,9 @@ const Profile = () => {
             </Swiper>
             <Space h={"md"}/>
             <Group spacing={"md"} direction={"row"} grow align={"apart"}>
-                <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">Токены за месяц</Card>
+                <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">Токены за месяц
+                    <Text size={"xl"} weight={"bold"}>{lasttokens()}</Text>
+                </Card>
                 <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">
                     Ты в рейтинге по городу {userdata.watchedObject?.city} на:
                     <Text size={"xl"} weight={"bold"}>249 место</Text>
@@ -153,7 +179,7 @@ const Profile = () => {
             <Space h={"xl"}/>
             <Grid grow>
                 <Grid.Col span={7}>
-                    <Button onClick={() => navigate("/exchange")} radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth leftIcon={<LoopIcon/>}>Обмен греенов</Button>
+                    <Button onClick={() => navigate("/exchange")} radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth leftIcon={<LoopIcon/>}>Обмен гринов</Button>
                 </Grid.Col>
                 <Grid.Col span={4}>
                     <Button radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth>Статистика</Button>
