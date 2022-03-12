@@ -31,6 +31,13 @@ const Map = () => {
     const containerList = useContainerList();
     const [features, setFeatures] = useState({})
 
+    const [mapState, setMapState] = useState({center: [45.0360, 38.9746], zoom: 12});
+
+    const onNearestClick = () => {
+        setMapState({center: [45.037416, 38.995660], zoom: 15});
+
+    }
+
     useEffect(() => {
         if (containerList.watchedObject != null) {
             let tempFeatures = {
@@ -74,7 +81,7 @@ const Map = () => {
                 <Text size="xl" weight="bold" style={{marginBottom:"14px"}}>г. Краснодар</Text>
                 <Grid justify="space-between">
                     <Grid.Col span={6}>
-                        <Button size="md" fullWidth={true} radius="lg" style={button_style}>
+                        <Button size="md" fullWidth={true} radius="lg" style={button_style} onClick={onNearestClick}>
                             Ближайшие пункты
                         </Button>
                     </Grid.Col>
@@ -94,7 +101,7 @@ const Map = () => {
             </Container>
             {
                 containerList.watchedObject &&
-                <MapContainer objectManagerFilter={ objectManagerFilter } features={ features }/>
+                <MapContainer objectManagerFilter={ objectManagerFilter } features={ features } state={mapState}/>
             }
         </div>
     )

@@ -40,7 +40,7 @@ const MapContainer = (props) => {
         <>
             <Container style={mapContainerStyle}>
                 <YMaps>
-                    <Map defaultState={{ center: [45.0360, 38.9746], zoom: 13 }} width={ "100%" } height={ "100%" }>
+                    <Map state={props.state} width={ "100%" } height={ "100%" }>
                         <ObjectManagerContainer
                             features={ props.features }
                             onPlacemarkClick={ onPlacemarkClick }
