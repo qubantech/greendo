@@ -1,4 +1,5 @@
 import {useWatchedObject} from "../app.realtimedb.service";
+// @ts-ignore
 import {Container} from "../../app.models/models";
 
 export function useContainer(containerId: number) {

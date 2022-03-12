@@ -14,14 +14,12 @@ const ObjectManagerContainer = ( props ) => {
                 filter={ props.objectManagerFilter }
                 features={ props.features }
                 modules={[
-                    'objectManager.addon.objectsHint',
                 ]}
                 instanceRef={ref =>
                     ref?.objects.events.add('click', (e) => {
                         // Используем айдишник для того, чтобы далее получить инфу по метке
                         const objectId = e.get('objectId');
                         let obj = ref?.objects.getById(objectId);
-                        console.log(obj);
                         props.onPlacemarkClick(obj)
                     })}
 
