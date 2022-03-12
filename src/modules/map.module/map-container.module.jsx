@@ -55,7 +55,7 @@ const initial_objects = {
 
 const placeMarkDescriptionStyle = {
     position:"absolute",
-    zIndex:90,
+    zIndex:2,
     bottom:0,
     // width: "100%",
     maxWidth: "100vw",
@@ -64,7 +64,16 @@ const placeMarkDescriptionStyle = {
     boxShadow:"-10px 4px 20px rgba(48, 48, 48, 0.1)",
     padding: "27px",
     overflow: "hidden",
-    // marginBottom:"50px"
+    marginBottom:"50px"
+}
+
+const mapContainerStyle = {
+    // position:"absolute",
+    // bottom:0,
+    padding:0,
+    // marginBottom:"50px",
+    width:"100vw",
+    height: "65vh",
 }
 
 const MapContainer = (props) => {
@@ -77,9 +86,9 @@ const MapContainer = (props) => {
     };
     return (
         <>
-            <Container style={{ position:"absolute", bottom:0, padding:0, marginBottom:"50px", width:"100vw"  }}>
+            <Container style={mapContainerStyle}>
                 <YMaps>
-                    <Map defaultState={{ center: [45.0360, 38.9746], zoom: 13 }} width={ "100%" } height={ "70vh" }>
+                    <Map defaultState={{ center: [45.0360, 38.9746], zoom: 13 }} width={ "100%" } height={ "100%" }>
                         <ObjectManagerContainer
                             features={ features }
                             onPlacemarkClick={ onPlacemarkClick }
