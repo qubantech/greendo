@@ -34,6 +34,15 @@ type Fundomate = {
     capacityMap: {[capacity: number]: number} // trashTypeId -> filled [0..1]
 }
 
+type Container = {
+    containerId: number,
+    location: GeolocationCoordinates,
+    trashTypeIdList: number[],
+    title: string,
+    address: string,
+    description: string,
+}
+
 type Sale = {
     saleId: number,
     brand: string,
@@ -95,6 +104,7 @@ export type {
     User,
     TrashType,
     OwnedSale,
+    Container,
     Sale,
     OwnedSubscription,
     Subscription,
