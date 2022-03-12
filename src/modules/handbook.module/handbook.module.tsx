@@ -3,7 +3,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../app.module/app.configs";
 import {useLocation, useNavigate} from "react-router-dom";
 import Navigation from "../../app.module/app.layouts/app.navigation/navigation";
-import {Card, Container, Grid, Image, Space, Text, Title} from "@mantine/core";
+import {Card, Container, Grid, Group, Image, Space, Text, Title} from "@mantine/core";
 import {CaretRightIcon} from "@radix-ui/react-icons";
 import {Pagination} from "swiper";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,7 +17,9 @@ import Carousel2 from "../profile.module/img/carousel1.svg";
 import Carousel3 from "../profile.module/img/carousel3.png";
 //@ts-ignore
 import Carousel4 from "../profile.module/img/сarousel4.png";
-import InfoModal from "./infoModal";
+//@ts-ignore
+import greendo from "./img/greengo.png";
+import {useTrashType, useTrashTypeList} from "../../app.module/app.services/app.type.service";
 
 const informations = {
     1: {
@@ -37,16 +39,9 @@ const informations = {
 
 const Handbook = () => {
     const [user, loading, error] = useAuthState(auth);
+    const trashtype = useTrashTypeList()
     let navigate = useNavigate();
-    let location = useLocation();
-
-    const [open, setOpen] = useState(false);
-    const [children, setChildren] = useState<JSX.Element>();
-    const modalinfo = (obj:JSX.Element) => {
-        setOpen(true);
-        setChildren(obj);
-    }
-
+    let i:number = 0;
     useEffect(() => {
         if (!user){
             navigate("/");
@@ -54,7 +49,6 @@ const Handbook = () => {
     },[]);
     return (
         <Container>
-            <InfoModal isOpen={open} setOpen={setOpen} children={children || <div></div>}/>
             <Space h={"md"}/>
             <Swiper
                 direction={"horizontal"}
@@ -74,20 +68,28 @@ const Handbook = () => {
                 <SwiperSlide><Image src={Carousel4}/></SwiperSlide>
             </Swiper>
             <Space h={"md"}/>
-            <Title order={2}> Экогид </Title>
+            <Group direction={"row"} grow position={"apart"}>
+                <Image width={"150px"} src={greendo}/>
+                <Title pt={8} align={"right"} order={3}> ЭКОГИД</Title>
+            </Group>
             <Space h={"md"}/>
             {user && <Navigation/>}
-            {Object.entries(informations).map((obj)=> {
-                console.log(obj)
+            {trashtype.watchedObject && trashtype.watchedObject.map((obj, index)=> {
                 return (
                     <>
-                        <Card onClick={() => modalinfo(obj[1].desc)} sx={{backgroundColor:"#EEF6FF"}}  shadow="sm" p="lg">
+                        <Card key={index} onClick={() => navigate(`/handbook/${index}`)} sx={{backgroundColor:"#EEF6FF"}}  shadow="sm" p="xs">
                             <Grid>
-                                <Grid.Col span={11}>
-                                    <Text size={"md"}>{obj[1].title}</Text>
+                                <Grid.Col span={2}>
+                                    <Image width={40} src={obj?.imageUrl}/>
                                 </Grid.Col>
-                                <Grid.Col span={1}>
-                                    <CaretRightIcon style={{height:20, width: 20}}/>
+                                <Grid.Col span={8}>
+                                    {
+                                        //@ts-ignore
+                                    }
+                                    <Text size={"md"}>{obj?.name|| "sas"}</Text>
+                                </Grid.Col>
+                                <Grid.Col span={2}>
+                                    <CaretRightIcon style={{height:40, width: 40}}/>
                                 </Grid.Col>
                             </Grid>
                         </Card>
@@ -95,7 +97,7 @@ const Handbook = () => {
                     </>
                     )
             })}
-            <div>Handbook Module</div>
+            <Space h={70}/>
         </Container>
     )
 };

@@ -47,6 +47,8 @@ import ActivityModal from "./activityModal";
 import {Takeout} from "../../app.module/app.models/models";
 import {useSubscriptionList} from "../../app.module/app.services/app.subscription.service";
 import {useFundomateList} from "../../app.module/app.services/app.fundomate.service";
+import {useSaleList} from "../../app.module/app.services/app.sale.service";
+import SaleModal from './saleModal';
 
 const createCarouselItemImage = (index:number, options = {}) => (
     <div key={index}>
@@ -64,9 +66,12 @@ const baseChildren = <div>{[1, 2].map(createCarouselItemImage)}</div>;
 const Profile = () => {
     const [user, loading, error] = useAuthState(auth);
     const [open, setOpen] = useState(false);
+    const [openSale, setOpenSale] = useState(false);
+    const [codeSale, setCodeSale] = useState<number>(12345678);
     const [take, setTake] = useState<Takeout>();
     const userdata = useUser(user?.uid || "0")
     const orglist = useSubscriptionList()
+    const salelist = useSaleList();
     let navigate = useNavigate();
     let location = useLocation();
 
@@ -85,6 +90,11 @@ const Profile = () => {
         setOpen(true)
     }
 
+    const setSale = (num:number) => {
+        setCodeSale(num)
+        setOpenSale(true)
+    }
+
     const logout = () => {
         signOut(auth);
         navigate("/")
@@ -94,6 +104,7 @@ const Profile = () => {
     <>
         {user && <Navigation/>}
         <ActivityModal open={open} setOpen={setOpen} obj={take}/>
+        <SaleModal open={openSale} setOpen={setOpenSale} obj={codeSale}/>
         <Container >
             <Group direction={"column"} grow>
                 <Group direction={"row"} spacing={"xs"} position={"apart"} grow>
@@ -148,6 +159,44 @@ const Profile = () => {
                     <Button radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth>Статистика</Button>
                 </Grid.Col>
             </Grid>
+            <Space h={50}/>
+            <Grid>
+                <Grid.Col span={10}>
+                    <Title order={2} >Купоны</Title>
+                </Grid.Col>
+                {/*<Grid.Col span={1}>
+                    <CaretRightIcon style={{height:35, width: 35}}/>
+                </Grid.Col>*/}
+            </Grid>
+            <Space h={"md"}/>
+            {userdata.watchedObject?.ownedSaleList && userdata.watchedObject?.ownedSaleList.map((obj) => {
+                return (
+                    <>
+                    <Card onClick={() => {setSale(obj.saleId)}} sx={{backgroundColor:"#EEF6FF"}} key={obj.saleId} shadow="sm" p="md" pr="xl">
+                        <Grid gutter={"md"}>
+                            <Grid.Col gutter={0} span={2}>
+                                <ActionIcon size={45} style={{backgroundColor:"blue"}}  radius={"xl"}>
+                                    <div></div>
+                                </ActionIcon>
+                            </Grid.Col>
+                            <Grid.Col span={5} >
+                                <Text size={"lg"} weight={"bold"}>
+                                    {//@ts-ignore
+                                        salelist.watchedObject && salelist.watchedObject[Number(obj.saleId)]?.brand || "Brand"}
+                                </Text>
+                                <Text color={"blue"} size={"sm"}> {//@ts-ignore
+                                    salelist.watchedObject && salelist.watchedObject[Number(obj.saleId)]?.description || "Desc"}
+                                </Text>
+                            </Grid.Col>
+                            <Grid.Col span={5} sx={{paddingLeft:"5vw"}}>
+                                <Text align={"right"} >Скидка {salelist.watchedObject && Number(salelist.watchedObject[Number(obj.saleId)]?.value)*100|| "Desc"}%</Text>
+                            </Grid.Col>
+                        </Grid>
+                    </Card>
+                        <Space h={"md"}/>
+                    </>
+                )
+            })}
             <Space h={50}/>
             <Grid>
                 <Grid.Col span={11}>

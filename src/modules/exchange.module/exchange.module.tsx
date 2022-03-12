@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../../app.module/app.configs";
 import {useNavigate} from "react-router-dom";
@@ -8,6 +8,8 @@ import {useGiveawayList} from "../../app.module/app.services/app.giveaway.servic
 import {useOrderSale, useSaleList} from "../../app.module/app.services/app.sale.service";
 // @ts-ignore
 import green from "../profile.module/img/greens.svg";
+import InfoModal from "../handbook.module/infoModal";
+import StatusModal from "./statusModal";
 
 const Exchange = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -15,6 +17,12 @@ const Exchange = () => {
     const sale = useSaleList()
     const navigate = useNavigate()
     const buysale = useOrderSale(user?.uid || "s")
+    const [open, setOpen] = useState(false);
+    const [children, setChildren] = useState<JSX.Element>();
+    const modalinfo = (obj:JSX.Element) => {
+        setOpen(true);
+        setChildren(obj);
+    }
     useEffect(() => {
         if (!user){
             navigate("/");
@@ -24,17 +32,17 @@ const Exchange = () => {
         console.log(id)
         buysale(id)
             .then((res)=> {
-                console.log("sas")
-            console.log(res)
+                modalinfo(<Title order={2}>Купон успешно куплен</Title>)
         })
             .catch((error) => {
-               console.log(error)
+                modalinfo(<Title order={2}>Ошибка при покупке купона. Точно не покупали раньше?</Title>)
             })
     }
     return (
         <>
             {user && <Navigation/>}
             <Container>
+                <StatusModal isOpen={open} setOpen={setOpen} children={children || <div></div>}/>
                 <Space h={"md"}/>
                 <Title order={2}>Обмен греенов</Title>
                 <Space h={"lg"}/>

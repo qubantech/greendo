@@ -8,6 +8,7 @@ import WelcomeGuide from './welcome-guide.module/welcome-guide.module';
 import barcodeHandler from "./camera.module/Handlers/barcodeHandler";
 import qrHandler from "./camera.module/Handlers/qrHandler";
 import ExchangeModule from "./exchange.module/exchange.module";
+import InfoModal from "./handbook.module/infoModal";
 
 export const CommonModules = [
     Camera,
@@ -19,5 +20,6 @@ export const CommonModules = [
     WelcomeGuide,
     barcodeHandler,
     qrHandler,
-    ExchangeModule
+    ExchangeModule,
+    InfoModal
 ]
