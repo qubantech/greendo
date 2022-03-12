@@ -11,7 +11,7 @@ import {
     ActionIcon,
     Grid,
     Button,
-    Title
+    Title, LoadingOverlay
 } from "@mantine/core";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAuthState} from "react-firebase-hooks/auth";
@@ -127,6 +127,7 @@ const Profile = () => {
     return (
     <>
         {user && <Navigation/>}
+        {!userdata && <LoadingOverlay visible={true}/>  }
         <ActivityModal open={open} setOpen={setOpen} obj={take}/>
         <SaleModal open={openSale} setOpen={setOpenSale} obj={codeSale}/>
         <Container >
@@ -172,7 +173,7 @@ const Profile = () => {
                     <Text size={"xl"} weight={"bold"}>{lasttokens()}</Text>
                 </Card>
                 <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">
-                    Ты в рейтинге по городу {userdata.watchedObject?.city} на:
+                    Ты в рейтинге по {userdata.watchedObject?.city} на:
                     <Text size={"xl"} weight={"bold"}>249 место</Text>
                 </Card>
             </Group>
@@ -270,6 +271,7 @@ const Profile = () => {
             {userdata.watchedObject?.takeoutList && userdata.watchedObject?.takeoutList.map((obj) => {
                 console.log(obj)
                 return (
+                    <>
                     <Card onClick={() => setTakeout(obj)} sx={{backgroundColor:"#EEF6FF"}} key={obj.takeoutId} shadow="sm" p="md" pr={"lg"}>
                         <Grid gutter={"xs"}>
                             <Grid.Col gutter={20} span={2}>
@@ -294,6 +296,8 @@ const Profile = () => {
                             </Grid.Col>
                         </Grid>
                     </Card>
+                        <Space h={"md"}/>
+                    </>
                 )
             })}
             {userdata.watchedObject?.ownedSubscriptionList && userdata.watchedObject?.ownedSubscriptionList.map((obj) => {

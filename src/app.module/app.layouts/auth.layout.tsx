@@ -11,7 +11,7 @@ export const AuthLayout = (props: {user?: UserInfo | null}) => {
         <div>
             {!props.user && (
                 <>
-                    <RegistrationLayout/>
+                    {/*<RegistrationLayout/>*/}
                     <LoginLayout/>
                 </>
             )}

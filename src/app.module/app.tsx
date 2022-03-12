@@ -11,7 +11,9 @@ import { CommonModules } from '../modules';
 import { useWatchedObject } from "./app.services/app.realtimedb.service";
 import { RTDB } from "./app.resources/app.resouces.realtimedb";
 import Navigation from "./app.layouts/app.navigation/navigation";
-import {Button} from "@mantine/core";
+import {Button, Center, Container, Space, Text} from "@mantine/core";
+//@ts-ignore
+import greendo from "./../modules/handbook.module/img/greengo.png"
 
 
 const App = () => {
@@ -31,12 +33,17 @@ const App = () => {
 
     return (
         <>
-            <div>
+            <Space h={100}/>
+            <Center>
+                <img width={"70%"} src={greendo}/>
+            </Center>
+            <Space h={"md"}/>
+            {/*<div>
                 Realtime db demo
                 <p>
                     {watchedObject && <strong>Объект в базе: {watchedObject}</strong>}
                 </p>
-            </div>
+            </div>*/}
             {/*<header>
                 <ul>
                     {
@@ -58,7 +65,9 @@ const App = () => {
                 && <Loader/>
                 || <AuthLayout user={user}/>
             }
-            <Button onClick={()=> navigate("/emulator")}>Перейти к эмулятору</Button>
+            <Container sx={{position:"absolute", bottom:"15px", left:"0px", right:"0px"}}>
+                <Button color={"green"} size={"lg"} fullWidth onClick={()=> navigate("/emulator")}>Перейти к эмулятору</Button>
+            </Container>
         </>
     );
 
