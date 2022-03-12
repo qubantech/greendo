@@ -23,7 +23,8 @@ type TrashType = {
     trashTypeId: number,
     name: string,
     description: string,
-    imageUrl: string
+    imageUrl: string,
+    color: string
 }
 
 type Fundomate = {
