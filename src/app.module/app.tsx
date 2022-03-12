@@ -11,6 +11,7 @@ import { CommonModules } from '../modules';
 import { useWatchedObject } from "./app.services/app.realtimedb.service";
 import { RTDB } from "./app.resources/app.resouces.realtimedb";
 import Navigation from "./app.layouts/app.navigation/navigation";
+import {Button} from "@mantine/core";
 
 
 const App = () => {
@@ -57,7 +58,7 @@ const App = () => {
                 && <Loader/>
                 || <AuthLayout user={user}/>
             }
-
+            <Button onClick={()=> navigate("/emulator")}>Перейти к эмулятору</Button>
         </>
     );
 

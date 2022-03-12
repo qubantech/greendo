@@ -49,7 +49,7 @@ class Scanner extends React.Component {
             console.log(this.state.isError)
             console.log(
                 "App qr[result]", decodedText, decodedResult);
-            this.props.history(`/qrcode/${decodedText.replaceAll("/",".")}`);
+            this.props.history(`/qrcode/${btoa(decodedText)}`);
         }
         else {
             this.state.isError = true;

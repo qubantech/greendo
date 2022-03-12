@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {Button} from "@mantine/core";
+import {Button, Progress, Space, Text} from "@mantine/core";
 import QRCode from "react-qr-code";
 import {encryptPayload} from "../../app.module/app.services/app.jwt.service";
 import {useUuid} from "@mantine/hooks";
 
-export const Emulator = () => {
+const Emulator = () => {
     const fundomateId = Math.round(Math.random() * 5)
 
     const [filled, setFilled] = useState({0: 0.0, 1: 0.0, 3: 0.0, 8: 0.0})
@@ -44,8 +44,22 @@ export const Emulator = () => {
     const uuid = useUuid()
     return (
         <>
+            <Text size={"lg"} align={"center"} weight={"bold"}>FundomateID: {fundomateId}</Text>
+            <Space h={"lg"}/>
+            <Text align={"center"}>Пластиковые бутылки</Text>
+            <Progress value={filled[0] * 100}/>
+            <Space h={"xs"}/>
+            <Text align={"center"}>Алюминевые банки</Text>
+            <Progress value={filled[1] * 100}/>
+            <Space h={"xs"}/>
+            <Text align={"center"}>Стеклянные бутылки</Text>
+            <Progress value={filled[3] * 100}/>
+            <Space h={"xs"}/>
+            <Text align={"center"}>Крышечки (металлические)</Text>
+            <Progress value={filled[8] * 100}/>
+            <Space h={"xs"}/>
             {!started &&
-                <Button onClick={() => start()}>Начать</Button>
+                <Button fullWidth onClick={() => start()}>Начать</Button>
             }
             <p>{JSON.stringify(thrownMap)}</p>
             {
@@ -75,3 +89,12 @@ export const Emulator = () => {
         </>
     );
 }
+export default {
+    routeProps: {
+        path: 'emulator',
+        exact: true,
+        index: true,
+        element: <Emulator/>,
+    },
+    name: 'Emulator',
+};

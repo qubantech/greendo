@@ -9,6 +9,7 @@ import barcodeHandler from "./camera.module/Handlers/barcodeHandler";
 import qrHandler from "./camera.module/Handlers/qrHandler";
 import ExchangeModule from "./exchange.module/exchange.module";
 import InfoModal from "./handbook.module/infoModal";
+import EmulatorModule from "./emulator.module/emulator.module";
 
 export const CommonModules = [
     Camera,
@@ -21,5 +22,6 @@ export const CommonModules = [
     barcodeHandler,
     qrHandler,
     ExchangeModule,
-    InfoModal
+    InfoModal,
+    EmulatorModule
 ]

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {Alert, Button, Card, Text, Title, Image, Group, Space, Container} from "@mantine/core";
 import {useCode} from "../../../app.module/app.services/app.code.service";
