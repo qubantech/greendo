@@ -34,7 +34,11 @@ import Carousel1 from "./img/carousel1.svg"
 //@ts-ignore
 import Carousel2 from "./img/carousel1.svg"
 //@ts-ignore
+import Carousel4 from "./img/сarousel4.png"
+//@ts-ignore
 import green from "./img/greens.svg"
+//@ts-ignore
+import Carousel3 from "./img/carousel3.png"
 import "swiper/css";
 import "swiper/css/pagination";
 import { signOut } from 'firebase/auth';
@@ -42,6 +46,7 @@ import {useUser} from "../../app.module/app.services/app.user.service";
 import ActivityModal from "./activityModal";
 import {Takeout} from "../../app.module/app.models/models";
 import {useSubscriptionList} from "../../app.module/app.services/app.subscription.service";
+import {useFundomateList} from "../../app.module/app.services/app.fundomate.service";
 
 const createCarouselItemImage = (index:number, options = {}) => (
     <div key={index}>
@@ -122,7 +127,9 @@ const Profile = () => {
                 className="mySwiper"
             >
                 <SwiperSlide><Image src={Carousel1}/></SwiperSlide>
+                <SwiperSlide><Image src={Carousel3}/></SwiperSlide>
                 <SwiperSlide><Image src={Carousel2}/></SwiperSlide>
+                <SwiperSlide><Image src={Carousel4}/></SwiperSlide>
             </Swiper>
             <Space h={"md"}/>
             <Group spacing={"md"} direction={"row"} grow align={"apart"}>
@@ -135,7 +142,7 @@ const Profile = () => {
             <Space h={"xl"}/>
             <Grid grow>
                 <Grid.Col span={7}>
-                    <Button onClick={() => navigate("/exchange")} radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth leftIcon={<LoopIcon/>}>Обмен токенов</Button>
+                    <Button onClick={() => navigate("/exchange")} radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth leftIcon={<LoopIcon/>}>Обмен греенов</Button>
                 </Grid.Col>
                 <Grid.Col span={4}>
                     <Button radius={"md"} color="cyan" variant="subtle" size={"lg"} sx={{backgroundColor:"#EEF6FF"}} fullWidth>Статистика</Button>
@@ -151,7 +158,7 @@ const Profile = () => {
             {userdata.watchedObject?.ownedSubscriptionList && userdata.watchedObject?.ownedSubscriptionList.map((obj) => {
                 console.log(orglist)
                 return (
-                    <Card sx={{backgroundColor:"#EEF6FF"}} key={obj.subscriptionId} shadow="sm" p="md">
+                    <Card sx={{backgroundColor:"#EEF6FF"}} key={obj.subscriptionId} shadow="sm" p="md" pr="xl">
                         <Grid gutter={"md"}>
                             <Grid.Col gutter={20} span={2}>
                                 <ActionIcon size={45} style={{backgroundColor:"blue"}}  radius={"xl"}>
@@ -188,7 +195,7 @@ const Profile = () => {
             {userdata.watchedObject?.takeoutList && userdata.watchedObject?.takeoutList.map((obj) => {
                 console.log(obj)
                 return (
-                    <Card onClick={() => setTakeout(obj)} sx={{backgroundColor:"#EEF6FF"}} key={obj.takeoutId} shadow="sm" p="md">
+                    <Card onClick={() => setTakeout(obj)} sx={{backgroundColor:"#EEF6FF"}} key={obj.takeoutId} shadow="sm" p="md" pr={"lg"}>
                         <Grid gutter={"xs"}>
                             <Grid.Col gutter={20} span={2}>
                                 <ActionIcon size={45} style={{backgroundColor:"green"}}  radius={"xl"}>

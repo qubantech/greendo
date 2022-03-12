@@ -2,9 +2,12 @@ import React from 'react';
 import {Takeout} from "../../app.module/app.models/models";
 import {Modal, Title, Text, Group, Table} from "@mantine/core"
 import {useTrashTypeList} from "../../app.module/app.services/app.type.service";
+import {useFundomateList} from "../../app.module/app.services/app.fundomate.service";
+
 
 const ActivityModal = (props:{open:boolean, setOpen:any , obj:Takeout | undefined}) => {
     const lists = useTrashTypeList()
+    const fandomatinfo = useFundomateList()
     let x:Number
     return (
         <Modal
@@ -38,8 +41,13 @@ const ActivityModal = (props:{open:boolean, setOpen:any , obj:Takeout | undefine
             })}
                 </tbody>
             </Table>
-            <Text> Время:
-            {props.obj && new Date(props.obj.timestamp).toString()}
+            <Text>
+                FundomatID: {props.obj?.fundomateId}
+                {fandomatinfo.watchedObject && Object.entries(fandomatinfo.watchedObject).map((obj) => {
+                    console.log(obj)
+                })}
+            </Text>
+            <Text> Время: {props.obj && new Date(props.obj.timestamp).toString()}
             </Text>
         </Modal>
     );

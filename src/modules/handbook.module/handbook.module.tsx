@@ -13,6 +13,10 @@ import "swiper/css/pagination";
 import Carousel1 from "../profile.module/img/carousel1.svg";
 //@ts-ignore
 import Carousel2 from "../profile.module/img/carousel1.svg";
+//@ts-ignore
+import Carousel3 from "../profile.module/img/carousel3.png";
+//@ts-ignore
+import Carousel4 from "../profile.module/img/сarousel4.png";
 
 const informations = {
     1: {
@@ -58,7 +62,9 @@ const Handbook = () => {
                 className="mySwiper"
             >
                 <SwiperSlide><Image src={Carousel1}/></SwiperSlide>
+                <SwiperSlide><Image src={Carousel3}/></SwiperSlide>
                 <SwiperSlide><Image src={Carousel2}/></SwiperSlide>
+                <SwiperSlide><Image src={Carousel4}/></SwiperSlide>
             </Swiper>
             <Space h={"md"}/>
             <Title order={2}> Экогид </Title>
@@ -67,16 +73,20 @@ const Handbook = () => {
             {Object.entries(informations).map((obj)=> {
                 console.log(obj)
                 return (
-                    <Card shadow="sm" p="lg">
-                        <Grid>
-                            <Grid.Col span={11}>
-                                <Text size={"md"}>{obj[1].title}</Text>
-                            </Grid.Col>
-                            <Grid.Col span={1}>
-                                <CaretRightIcon style={{height:20, width: 20}}/>
-                            </Grid.Col>
-                        </Grid>
-                    </Card>)
+                    <>
+                        <Card sx={{backgroundColor:"#EEF6FF"}}  shadow="sm" p="lg">
+                            <Grid>
+                                <Grid.Col span={11}>
+                                    <Text size={"md"}>{obj[1].title}</Text>
+                                </Grid.Col>
+                                <Grid.Col span={1}>
+                                    <CaretRightIcon style={{height:20, width: 20}}/>
+                                </Grid.Col>
+                            </Grid>
+                        </Card>
+                        <Space h={"xs"}/>
+                    </>
+                    )
             })}
             <div>Handbook Module</div>
         </Container>
