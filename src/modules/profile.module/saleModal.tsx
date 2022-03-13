@@ -11,7 +11,7 @@ const saleModal = (props:{open:boolean, setOpen:any , obj:number}) => {
             onClose={() => props.setOpen(false)}
             title={<Title order={2}>Купон</Title>}
         >
-            <Text>{props.obj}</Text>
+            {/*<Text>{props.obj}</Text>*/}
             <img width={"90%"} height={"auto"} src={barcode}/>
         </Modal>
     );

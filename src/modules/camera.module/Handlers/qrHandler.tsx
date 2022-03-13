@@ -37,7 +37,7 @@ const QRHandler = () => {
         .catch((err)=> console.log(err))*/
     return (
         <div>
-            {complete && (
+            { userinfo && complete && (
                 <ActivityModal open={complete} setOpen={() => navigate("/profile")} obj={userinfo.watchedObject?.takeoutList.at(-1)}/>
             )
             }
@@ -57,7 +57,7 @@ const QRHandler = () => {
 export default {
     routeProps: {
         path: '/qrcode/:number',
-        exact: true,
+        exact: false,
         index: false,
         element: <QRHandler/>,
     },

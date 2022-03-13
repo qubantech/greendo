@@ -53,6 +53,7 @@ class PhotoCamera extends React.Component {
     }
 
     async takePhoto() {
+        this.props.setLoading(true)
         this.setState({...this.state, loading: true})
         const config = {
             sizeFactor: 1,
@@ -95,6 +96,7 @@ class PhotoCamera extends React.Component {
         console.log(this.state.req)
         //this.state.take = true
         console.log(this.state.take)
+        this.props.setLoading(false)
     }
 
     stopCamera () {
@@ -123,7 +125,6 @@ class PhotoCamera extends React.Component {
         const trashTypeId = Number(max)
         this.props.takeout(trashTypeId)
         console.log(trashTypeId)
-        this.props.setLoading(true)
         let loc_fil = this.props.filled
         loc_fil[max] = loc_fil[max] + this.props.volume[max]
         this.props.setFilled(loc_fil)
@@ -132,18 +133,18 @@ class PhotoCamera extends React.Component {
         this.props.setThrownMap(loc_th)
         this.state.filled[Number(max)] = this.state.filled[Number(max)] + this.props.volume[Number(max)]
         // console.log(cameraStore().filled)
-        this.props.setLoading(false)
     }
     render () {
         return (
             <Group direction={"row"} align={"center"} style={{width:"90vw", height:"auto"}}>
+                {this.state.loading && <Loader/>}
                 <Group>
                     <div style={{display:"none"}}>
                         <form  id="myAwesomeForm" method="post">
                             <input type="text" id="filename" name="filename" />
                         </form>
                     </div>
-                <video
+                    <video
                     style={{width: "90vw"}}
                     ref={this.videoRef}
                     autoPlay={true}
@@ -152,9 +153,8 @@ class PhotoCamera extends React.Component {
                     this.takePhoto();
                 }}> Take photo </Button>
                 </Group>
-                {this.state.loading && <Loader/>}
 
-                {this.state.take && !this.state.loading &&
+                {!this.state.loading && this.state.take && !this.state.loading &&
                     (<div>
                         <img
                         style={{width: "90vw"}}
