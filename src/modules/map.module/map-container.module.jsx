@@ -44,7 +44,7 @@ const MapContainer = (props) => {
                 ...mapContainerStyle,
             }}>
                 <YMaps>
-                    <Map state={props.state} width={ "100%" } height={  props.mapMode === "containers" ? "52vh" : "65vh" }>
+                    <Map state={props.state} width={ "100%" } height={  props.mapMode === "containers" ? "45vh" : "60vh" }>
                         <ObjectManagerContainer
                             features={ props.features }
                             onPlacemarkClick={ onPlacemarkClick }

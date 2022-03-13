@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import MapContainer from "./map-container.module";
-import {Button, Container, Divider, SegmentedControl, Skeleton, Text} from "@mantine/core";
+import {Button, Container, Divider, SegmentedControl, Text} from "@mantine/core";
 import MapFilter from "./map-filter";
 import {useAuthState} from "react-firebase-hooks/auth";
 import Navigation from "../../app.module/app.layouts/app.navigation/navigation";
@@ -12,13 +12,13 @@ import {useFundomateList} from "../../app.module/app.services/app.fundomate.serv
 
 const map_model_style = {
     height: "100vh",
-    overflow: "hidden",
+    // overflow: "hidden",
     position: "relative",
 }
 
 const map_header_style = {
-    marginTop: "15px",
-    boxShadow:"-10px 4px 20px rgba(48, 48, 48, 0.5)",
+    // marginTop: "15px",
+    // boxShadow:"-10px 4px 20px rgba(48, 48, 48, 0.5)",
     borderRadius:"16px 16px 0px 0px",
     padding:"28px 19px 14px 19px",
 }
