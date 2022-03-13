@@ -6,13 +6,13 @@ import {Swiper, SwiperSlide} from "swiper/react";
 //@ts-ignore
 import welcome1 from "./img/welcome1.svg";
 //@ts-ignore
-import welcome2 from "./img/Welcome2.png";
+import welcome2 from "./img/Welcome2.svg";
 //@ts-ignore
-import welcome3 from "./img/welcome3.png";
+import welcome3 from "./img/welcome3.svg";
 //@ts-ignore
-import welcome4 from "./img/welcome4.png";
+import welcome4 from "./img/welcome4.svg";
 //@ts-ignore
-import welcome5 from "./img/welcome5.png";
+import welcome5 from "./img/welcome5.svg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";

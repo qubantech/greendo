@@ -76,26 +76,27 @@ const Profile = () => {
     let location = useLocation();
 
     const lasttokens = () => {
-        let x_month:number = 0
-        console.log(userdata.watchedObject?.takeoutList)
-        userdata.watchedObject?.takeoutList.map((obj,index) =>{
-            let date = new Date();
-            date.setMonth(date.getMonth()+1)
-            if(date > new Date(obj.timestamp)) {
-                let q:number = 0;
-                Object.entries(obj.trashTypeCountMap).map((obj1, index1) => {
-                    // @ts-ignore
-                    let values = Object.keys(userdata.watchedObject.takeoutList[index].trashTypePriceMap)
-                    console.log(values);
-                    /*if (Number(keys[index1]) == Number(obj1[0])) {*/
-                        q += Number(Number(obj.trashTypePriceMap[Number(values[index1])]) * Number(obj1[1]))
-                    //}
-                })
-                console.log(q)
-                x_month += Number(q);
-            }
-        })
-        console.log(x_month)
+        let x_month: number = 0
+        if (userdata) {
+            console.log(userdata.watchedObject?.takeoutList)
+            userdata.watchedObject?.takeoutList.map((obj, index) => {
+                let date = new Date();
+                date.setMonth(date.getMonth() + 1)
+                if (date > new Date(obj.timestamp)) {
+                    let q: number = 0;
+                    Object.entries(obj.trashTypeCountMap).map((obj1, index1) => {
+                        // @ts-ignore
+                        let values = Object.keys(userdata.watchedObject.takeoutList[index].trashTypePriceMap)
+                        console.log(values);
+                            q += Number(Number(obj.trashTypePriceMap[Number(values[index1])]) * Number(obj1[1]))
+                        //}
+                    })
+                    console.log(q)
+                    x_month += Number(q);
+                }
+            })
+            console.log(x_month)
+        }
         return x_month
     }
 
@@ -170,7 +171,7 @@ const Profile = () => {
             <Space h={"md"}/>
             <Group spacing={"md"} direction={"row"} grow align={"apart"}>
                 <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">Токены за месяц
-                    <Text size={"xl"} weight={"bold"}>{lasttokens()}</Text>
+                    {userdata.watchedObject && <Text size={"xl"} weight={"bold"}>{lasttokens}</Text>}
                 </Card>
                 <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">
                     Ты в рейтинге по {userdata.watchedObject?.city} на:
@@ -283,11 +284,11 @@ const Profile = () => {
                                 <Group spacing={5}>
                                 <Image width={18} src={green}/>
                                 <Text size={"lg"} weight={"bold"}> {
-                                    Object.entries(obj.trashTypeCountMap).map(i =>
+                                    obj.trashTypeCountMap && Object.entries(obj.trashTypeCountMap).map(i =>
                                         x += (Number(i[1]) * obj.trashTypePriceMap[Number(i[0])]), x = 0).reverse()[0]
-                                } G</Text>
+                                }G</Text>
                                 </Group>
-                                <Text size={"sm"}> Было сдано {
+                                <Text size={"sm"}> Было сдано { obj.trashTypeCountMap &&
                                     Object.entries(obj.trashTypeCountMap).map(i => x += i[1], x = 0).reverse()[0]} кг
                                 </Text>
                             </Grid.Col>

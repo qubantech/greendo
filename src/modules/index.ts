@@ -12,12 +12,12 @@ import InfoModal from "./handbook.module/infoModal";
 import EmulatorModule from "./emulator.module/emulator.module";
 
 export const CommonModules = [
+    Profile,
     Camera,
     Dashboard,
     Feed,
     Handbook,
     MapComponent,
-    Profile,
     WelcomeGuide,
     barcodeHandler,
     qrHandler,
