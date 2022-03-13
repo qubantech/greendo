@@ -94,7 +94,7 @@ const MapContainer = (props) => {
                     // <FundomatInfo placeMarkDescriptionStyle={placeMarkDescriptionStyle}/>
                     <div style={{...placeMarkDescriptionStyle}}>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
-                            <Text size="lg" style={{marginBottom: "14px", }}>{selectedPoint.title && selectedPoint.title || "Контейнер"}</Text>
+                            <Text size="lg" style={{marginBottom: "14px", }}>{selectedPoint.title && selectedPoint.title || "Фандомат"}</Text>
                             <Cross1Icon style={{fontSize: "20px"}}
                                         onClick={() => {
                                             setSelectedPoint(null);
