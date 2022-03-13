@@ -76,7 +76,7 @@ class PhotoCamera extends React.Component {
             method: 'POST',
             body: formDataToUpload
         };
-        fetch('http://quban.tech:5000', requestOptions)
+        fetch('https://ml.quban.tech', requestOptions)
             .then(response => response.json())
             .then(data => this.setState(prevState => ({
                 ...prevState.dataUri,
