@@ -13,7 +13,7 @@ import { RTDB } from "./app.resources/app.resouces.realtimedb";
 import Navigation from "./app.layouts/app.navigation/navigation";
 import {Button, Center, Container, Space, Text} from "@mantine/core";
 //@ts-ignore
-import greendo from "./../modules/handbook.module/img/greengo.png"
+import greendo from "./../modules/handbook.module/img/greengo.svg"
 
 
 const App = () => {

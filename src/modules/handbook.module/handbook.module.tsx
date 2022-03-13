@@ -18,7 +18,7 @@ import Carousel3 from "../profile.module/img/carousel3.png";
 //@ts-ignore
 import Carousel4 from "../profile.module/img/сarousel4.png";
 //@ts-ignore
-import greendo from "./img/greengo.png";
+import greendo from "./img/greengo.svg";
 import {useTrashType, useTrashTypeList} from "../../app.module/app.services/app.type.service";
 
 const informations = {
