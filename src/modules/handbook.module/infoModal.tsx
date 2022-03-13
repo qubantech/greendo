@@ -15,14 +15,14 @@ const InfoModal = () => {
             onClose={() => navigate("/handbook")}
             title={
                 <Group>
-                    <img width={40} src={trashlist.watchedObject[Number(params.id)]?.imageUrl || undefined}/>
+                    <img width={40} alt={"icon"} src={trashlist.watchedObject[Number(params.id)]?.imageUrl || undefined}/>
                     <Title order={3}>{trashlist.watchedObject[Number(params.id)]?.name}</Title>
                 </Group>
             }
             >
                 <Text color={"gray"} size={"sm"}>Описание:</Text>
                 <div dangerouslySetInnerHTML={{__html: (trashlist?.watchedObject[Number(params.id)]?.description || "Empty")}}/>
-                <Text>{trashlist.watchedObject[Number(params.id)]?.trashTypeId}</Text>
+                {/*<Text>{trashlist.watchedObject[Number(params.id)]?.description || "Empty"}</Text>*/}
             </Modal>) || <LoadingOverlay visible={true}/>
         }
         </>
