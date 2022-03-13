@@ -78,7 +78,7 @@ const Handbook = () => {
                 return (
                     <>
                         <Card key={index} onClick={() => navigate(`/handbook/${index}`)} sx={{backgroundColor:"#EEF6FF"}}  shadow="sm" p="xs">
-                            <Grid>
+                            <Grid align={"center"}>
                                 <Grid.Col span={2}>
                                     <Image width={40} src={obj?.imageUrl}/>
                                 </Grid.Col>
