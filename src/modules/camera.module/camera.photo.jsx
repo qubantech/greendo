@@ -2,6 +2,7 @@ import React from 'react';
 import CameraPhoto, { FACING_MODES } from 'jslib-html5-camera-photo';
 import {Button, Grid, Group, Progress, Space, Text} from "@mantine/core";
 import {cameraStore} from "./store";
+import {Loader} from "../../app.module/app.components";
 
 function b64toBlob(b64Data, contentType, sliceSize) {
     contentType = contentType || '';
@@ -52,6 +53,7 @@ class PhotoCamera extends React.Component {
     }
 
     async takePhoto() {
+        this.setState({...this.state, loading: true})
         const config = {
             sizeFactor: 1,
             imageType: "jpg"
@@ -79,6 +81,7 @@ class PhotoCamera extends React.Component {
             .then(data => this.setState(prevState => ({
                 ...prevState.dataUri,
                 take: true,
+                loading: false,
                 req: data
             })));
         /*request.open("POST", "http://quban.tech:5000");
@@ -117,6 +120,9 @@ class PhotoCamera extends React.Component {
     }
 
     setFill(max){
+        const trashTypeId = Number(max)
+        this.props.takeout(trashTypeId)
+        console.log(trashTypeId)
         this.props.setLoading(true)
         let loc_fil = this.props.filled
         loc_fil[max] = loc_fil[max] + this.props.volume[max]
@@ -125,7 +131,7 @@ class PhotoCamera extends React.Component {
         loc_th[max] = loc_th[max] + this.props.volume[max]
         this.props.setThrownMap(loc_th)
         this.state.filled[Number(max)] = this.state.filled[Number(max)] + this.props.volume[Number(max)]
-        console.log(cameraStore().filled)
+        // console.log(cameraStore().filled)
         this.props.setLoading(false)
     }
     render () {
@@ -146,7 +152,9 @@ class PhotoCamera extends React.Component {
                     this.takePhoto();
                 }}> Take photo </Button>
                 </Group>
-                {this.state.take &&
+                {this.state.loading && <Loader/>}
+
+                {this.state.take && !this.state.loading &&
                     (<div>
                         <img
                         style={{width: "90vw"}}
@@ -171,6 +179,7 @@ class PhotoCamera extends React.Component {
                             <Progress color={"green"} value={this.state.req[3]*100}/>
                             </Grid.Col>
                         </Grid>
+                        <br/>
                         Скорее всего это
                         {
                             this.maxElement(this.state.req) == "3" && " стекло"
@@ -184,6 +193,7 @@ class PhotoCamera extends React.Component {
                         {
                             this.maxElement(this.state.req) == "0" && " пластик"
                         }
+                        <br/>
                         <Button onClick={() => this.setFill(this.maxElement(this.state.req))}>Да</Button>
                         <Button>Нет</Button>
                     </div>)

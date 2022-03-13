@@ -21,7 +21,7 @@ const Emulator = () => {
     const [started, setStarted] = useState(false)
     const [finished, setFinished] = useState(false)
     const [thrownMap, setThrownMap] = useState({})
-    const [localAdd, setLocalAdd] = useState({0:0.0, 1:0.0, 3:0.0, 8:0.0})
+    const [localAdd, setLocalAdd] = useState({0: 0.0, 1: 0.0, 3: 0.0, 8: 0.0})
 
     const start = () => {
         setStarted(true)
@@ -56,21 +56,23 @@ const Emulator = () => {
     const uuid = useUuid()
     console.log(thrownMap)
     console.log(cameraStore().filled)
+    console.log(filled)
     return (
         <Container>
-           <>
+            <>
                 <Text size={"lg"} align={"center"} weight={"bold"}>FundomateID: {fundomateId}</Text>
                 <Space h={"lg"}/>
-                <Text align={"center"}>Пластиковые бутылки {"+" + Math.floor(1/volume[0] * localAdd[0]) || " "}</Text>
+                <Text align={"center"}>Пластиковые бутылки {"+" + Math.floor(1 / volume[0] * localAdd[0]) || " "}</Text>
                 <Progress value={filled[0] * 100}/>
                 <Space h={"xs"}/>
-                <Text align={"center"}>Алюминевые банки {"+" +  Math.floor(1/volume[1] * localAdd[1]) || " "}</Text>
+                <Text align={"center"}>Алюминевые банки {"+" + Math.floor(1 / volume[1] * localAdd[1]) || " "}</Text>
                 <Progress value={filled[1] * 100}/>
                 <Space h={"xs"}/>
-                <Text align={"center"}>Стеклянные бутылки {"+" +  Math.floor(1/volume[3] * localAdd[3]) || " "}</Text>
+                <Text align={"center"}>Стеклянные бутылки {"+" + Math.floor(1 / volume[3] * localAdd[3]) || " "}</Text>
                 <Progress value={filled[3] * 100}/>
                 <Space h={"xs"}/>
-                <Text align={"center"}>Крышечки (металлические) {"+" +  Math.floor(1/volume[8] * localAdd[8]) || " "}</Text>
+                <Text align={"center"}>Крышечки
+                    (металлические) {"+" + Math.floor(1 / volume[8] * localAdd[8]) || " "}</Text>
                 <Progress value={filled[8] * 100}/>
                 <Space h={"xs"}/>
             </>
@@ -81,19 +83,25 @@ const Emulator = () => {
             {
                 started && (
                     <>
-                    {!isHideCamera && <PhotoCamera setLoading={setLoading} filled={filled} setFilled={setFilled} thrownMap={localAdd} setThrownMap={setLocalAdd} volume={volume}/>}
-                        <Group spacing={5} align={"center"} grow direction={'column'}>
-                            <Button fullWidth onClick={() => setIsHideCamera(!isHideCamera)}>Показать/скрыть камеру</Button>
-                            <Space h={"md"}/>
-                            <Button fullWidth disabled={isVisible(0)} onClick={() => takeout(0)}>Пластиковая
-                                    бутылка</Button>
-                            <Button fullWidth disabled={isVisible(1)} onClick={() => takeout(1)}>Алюминиевая
-                                банка</Button>
-                            <Button fullWidth disabled={isVisible(3)} onClick={() => takeout(3)}>Стеклянная
-                                бутылка</Button>
-                            <Button fullWidth disabled={isVisible(8)} onClick={() => takeout(8)}>Крышечка</Button>
-                            <Space h={"md"}/>
-                        </Group>
+                        {!isHideCamera &&
+                            <PhotoCamera takeout={takeout} setLoading={setLoading} filled={filled} setFilled={setFilled}
+                                         thrownMap={localAdd} setThrownMap={setLocalAdd} volume={volume}/>}
+                        <Button fullWidth onClick={() => setIsHideCamera(!isHideCamera)}>Показать/скрыть камеру</Button>
+                        <Space h={"md"}/>
+                        {
+                            isHideCamera && (
+                                <Group spacing={5} align={"center"} grow direction={'column'}>
+                                    <Button fullWidth disabled={isVisible(0)} onClick={() => takeout(0)}>Пластиковая
+                                        бутылка</Button>
+                                    <Button fullWidth disabled={isVisible(1)} onClick={() => takeout(1)}>Алюминиевая
+                                        банка</Button>
+                                    <Button fullWidth disabled={isVisible(3)} onClick={() => takeout(3)}>Стеклянная
+                                        бутылка</Button>
+                                    <Button fullWidth disabled={isVisible(8)} onClick={() => takeout(8)}>Крышечка</Button>
+                                    <Space h={"md"}/>
+                                </Group>
+                            )
+                        }
                     </>
                 )
             }

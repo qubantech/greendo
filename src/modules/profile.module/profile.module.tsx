@@ -268,7 +268,7 @@ const Profile = () => {
                 </Grid.Col>*/}
             </Grid>
             <Space h={"md"}/>
-            {userdata.watchedObject?.takeoutList && userdata.watchedObject?.takeoutList.map((obj) => {
+            {userdata.watchedObject?.takeoutList && userdata.watchedObject?.takeoutList.reverse().map((obj) => {
                 console.log(obj)
                 return (
                     <>
