@@ -5,8 +5,6 @@ import ObjectManagerContainer from "./object-manager-container";
 import point_address from "../../app.module/app.resources/app.resources.map/icons/point_address.svg";
 import point_bonus from "../../app.module/app.resources/app.resources.map/icons/point_bonus.svg";
 import {Cross1Icon} from "@radix-ui/react-icons";
-import ContainerInfo from "./container-info";
-import FundomatInfo from "./fundomat-info";
 import purse from "../../app.module/app.resources/app.resources.map/icons/purse.svg";
 
 
@@ -36,10 +34,8 @@ const mapContainerStyle = {
 
 const MapContainer = (props) => {
     const [selectedPoint, setSelectedPoint] = useState(null)
-    const [isOpened, setIsOpened] = useState(false);
 
     const onPlacemarkClick = (point) => {
-        setIsOpened(true);
         setSelectedPoint(point);
     };
     return (
@@ -98,7 +94,7 @@ const MapContainer = (props) => {
                     // <FundomatInfo placeMarkDescriptionStyle={placeMarkDescriptionStyle}/>
                     <div style={{...placeMarkDescriptionStyle}}>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
-                            <Text size="lg" style={{marginBottom: "14px", }}>{selectedPoint.id && selectedPoint.id || "Контейнер"}</Text>
+                            <Text size="lg" style={{marginBottom: "14px", }}>{selectedPoint.title && selectedPoint.title || "Контейнер"}</Text>
                             <Cross1Icon style={{fontSize: "20px"}}
                                         onClick={() => {
                                             setSelectedPoint(null);
