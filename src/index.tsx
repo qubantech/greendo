@@ -12,14 +12,17 @@ import {
 
 import AppRootModule from './app.module/app'
 import Navigation from "./app.module/app.layouts/app.navigation/navigation";
+import {cameraStore} from "./modules/camera.module/store";
 
 const AppRoot = AppRootModule.routeProps.element;
 
-
+// @ts-ignore
+export const StoreContext = React.createContext();
 
 
 ReactDOM.render(
     <React.StrictMode>
+        <StoreContext.Provider value={cameraStore}>
         <BrowserRouter>
             <Routes>
                 <Route {...AppRootModule.routeProps}/>
@@ -32,6 +35,7 @@ ReactDOM.render(
                 }
             </Routes>
         </BrowserRouter>
+        </StoreContext.Provider >
     </React.StrictMode>,
     document.getElementById('root')
 )

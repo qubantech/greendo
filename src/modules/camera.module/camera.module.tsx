@@ -35,9 +35,9 @@ const Camera = () => {
     return (
         <>
             {user && <Navigation/>}
-            {cameraOpened() && <PhotoCamera/>}
-            {scannerOpened() && <Scanner/>}
-            <SegmentedControl sx={{position:"absolute", bottom:"50px", right:"0", width: "100%"}} size={"xl"}
+            {/*{cameraOpened() && <PhotoCamera/>}*/}
+            {/*scannerOpened() &&*/} <Scanner/>
+            {/*<SegmentedControl sx={{position:"absolute", bottom:"50px", right:"0", width: "100%"}} size={"xl"}
                               data={[
                                   {
                                       value: TAB_TYPE.CAMERA,
@@ -62,7 +62,7 @@ const Camera = () => {
                                   setTab(value)
                               }}
                               defaultValue={TAB_TYPE.SCANNER}
-            />
+            />*/}
         </>
     )
 };
