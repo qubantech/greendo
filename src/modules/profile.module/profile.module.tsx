@@ -77,12 +77,12 @@ const Profile = () => {
 
     const lasttokens = () => {
         let x_month: number = 0
-        if (userdata) {
+        if (userdata && userdata.watchedObject && userdata.watchedObject?.takeoutList) {
             console.log(userdata.watchedObject?.takeoutList)
             userdata.watchedObject?.takeoutList.map((obj, index) => {
                 let date = new Date();
                 date.setMonth(date.getMonth() + 1)
-                if (date > new Date(obj.timestamp)) {
+                if (obj.trashTypeCountMap && date > new Date(obj.timestamp)) {
                     let q: number = 0;
                     Object.entries(obj.trashTypeCountMap).map((obj1, index1) => {
                         // @ts-ignore
@@ -171,7 +171,7 @@ const Profile = () => {
             <Space h={"md"}/>
             <Group spacing={"md"} direction={"row"} grow align={"apart"}>
                 <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">Токены за месяц
-                    {userdata.watchedObject && <Text size={"xl"} weight={"bold"}>{lasttokens}</Text>}
+                    {userdata && userdata.watchedObject && <Text size={"xl"} weight={"bold"}>{lasttokens() || "0"}</Text>}
                 </Card>
                 <Card sx={{backgroundColor:"#EEF6FF"}} shadow="sm" p="lg">
                     Ты в рейтинге по {userdata.watchedObject?.city} на:

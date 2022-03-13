@@ -33,16 +33,16 @@ const ActivityModal = (props:{open:boolean, setOpen:any , obj:Takeout | undefine
             {props.obj?.trashTypeCountMap && Object.entries(props.obj?.trashTypeCountMap).map((obj) => {
                 return (
                     <tr key={obj[0]}>
-                        <td> {lists.watchedObject && lists.watchedObject[Number(obj[0])]?.name}</td>
-                        <td>{obj[1]}</td>
-                        <td>{props.obj?.trashTypePriceMap && props.obj?.trashTypePriceMap[Number(obj[0])]}</td>
+                        <td> {obj[0] && lists.watchedObject && lists.watchedObject[Number(obj[0])]?.name}</td>
+                        <td>{obj[1] && obj[1]}</td>
+                        <td>{obj[0] && props.obj?.trashTypePriceMap && props.obj?.trashTypePriceMap[Number(obj[0])]}</td>
                     </tr>
                 )
             })}
                 </tbody>
             </Table>
             <Text>
-                FundomatID: {props.obj?.fundomateId}
+                FundomatID: { props.obj && props.obj?.fundomateId}
                 {fandomatinfo.watchedObject && Object.entries(fandomatinfo.watchedObject).map((obj) => {
                     console.log(obj)
                 })}
