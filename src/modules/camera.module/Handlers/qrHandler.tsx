@@ -38,7 +38,7 @@ const QRHandler = () => {
     return (
         <div>
             {complete && (
-                <ActivityModal open={complete} setOpen={() => navigate("/profile")} obj={userinfo.watchedObject?.takeoutList.at(-1)}/>
+                <ActivityModal open={complete} setOpen={() => navigate("/profile")} obj={userinfo.watchedObject?.takeoutList[userinfo.watchedObject?.takeoutList.length-1]}/>
             )
             }
             {    getError && (
